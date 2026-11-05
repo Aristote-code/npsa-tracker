@@ -1,15 +1,25 @@
 import * as React from "react";
 
+import { applications } from "@/data";
 import { Assisted } from "@/screens/citizen/Assisted";
 import { Issue } from "@/screens/citizen/Issue";
 import { Lookup } from "@/screens/citizen/Lookup";
+import { Receipt } from "@/screens/citizen/Receipt";
 import { Received } from "@/screens/citizen/Received";
 import { Replace } from "@/screens/citizen/Replace";
 import { Status } from "@/screens/citizen/Status";
 import { Verify } from "@/screens/citizen/Verify";
 import type { Application } from "@/types";
 
-type Step = "lookup" | "assisted" | "status" | "verify" | "issue" | "replace" | "received";
+type Step =
+  | "lookup"
+  | "receipt"
+  | "assisted"
+  | "status"
+  | "verify"
+  | "issue"
+  | "replace"
+  | "received";
 
 /**
  * Once the replacement is on its way the file goes back to the Records Office
@@ -53,8 +63,30 @@ export function CitizenApp() {
     setStep("status");
   };
 
+  if (step === "receipt") {
+    // The receipt is reached from the submission flow in real life, and from
+    // the confirmation SMS afterwards; the prototype links to it directly.
+    const submitted = application ?? applications[0];
+    return (
+      <Receipt
+        application={submitted}
+        onBack={() => setStep("lookup")}
+        onTrack={() => {
+          setApplication(submitted);
+          setStep("status");
+        }}
+      />
+    );
+  }
+
   if (step === "lookup" || !application) {
-    return <Lookup onFound={open} onNeedHelp={() => setStep("assisted")} />;
+    return (
+      <Lookup
+        onFound={open}
+        onNeedHelp={() => setStep("assisted")}
+        onShowReceipt={() => setStep("receipt")}
+      />
+    );
   }
 
   if (step === "assisted") {

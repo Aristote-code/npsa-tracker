@@ -37,6 +37,13 @@ strings in all three.
 
 ## The file number
 
+The number is issued on the **submission receipt** — reachable from the lookup
+screen's prototype strip as "Just submitted". It is the hinge of the whole
+design, so the number is the screen rather than a line of confirmation copy:
+set large and grouped for reading aloud, repeated on a printable paper slip for
+counter applicants, and sent by SMS so it survives a lost phone.
+
+
 Nine digits, no letters, shown in threes: `260 051 230`. The last digit is a Luhn
 check digit, so a mistyped number is caught on the handset before any lookup —
 free, and before a USSD round trip. One identifier works unchanged on the paper

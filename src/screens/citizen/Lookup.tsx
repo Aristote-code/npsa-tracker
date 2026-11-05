@@ -12,11 +12,12 @@ import type { Application } from "@/types";
 type LookupProps = {
   onFound: (application: Application) => void;
   onNeedHelp: () => void;
+  onShowReceipt: () => void;
 };
 
 type Problem = "incomplete" | "mistyped" | "notFound" | null;
 
-export function Lookup({ onFound, onNeedHelp }: LookupProps) {
+export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
   const { t } = useI18n();
   const [value, setValue] = React.useState("");
   const [problem, setProblem] = React.useState<Problem>(null);
@@ -137,6 +138,9 @@ export function Lookup({ onFound, onNeedHelp }: LookupProps) {
             }}
           >
             260 051 320
+          </button>
+          <button type="button" onClick={onShowReceipt}>
+            Just submitted
           </button>
         </div>
       </form>

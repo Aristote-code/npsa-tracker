@@ -1311,3 +1311,59 @@ img { display: block; max-width: 100%; }
 
 /* Grouped digits read as a number to be spoken, not a code to be decoded. */
 .input--ref { letter-spacing: .14em; font-size: 18px; }
+
+/* ------------------------------------------------------------- receipt -- */
+
+.receipt-head { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.receipt-head .done__mark { width: 52px; height: 52px; box-shadow: 0 0 0 6px var(--green-soft); }
+.receipt-head h1 {
+  margin: 4px 0 0;
+  color: var(--ink-strong);
+  font-size: 21px; font-weight: 600; line-height: 28px; letter-spacing: -.3px;
+}
+.receipt-head p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* The number is the deliverable of this screen, so it is set like one. */
+.number-card {
+  padding: 18px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(82, 88, 102, .05);
+}
+.number-card__label { color: var(--muted); font-size: 13px; }
+.number-card__value {
+  color: var(--ink-strong);
+  font-size: 30px; font-weight: 600; line-height: 36px; letter-spacing: .06em;
+}
+
+/* A printed slip, set in the typeface a counter printer would actually use. */
+.slip {
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+  background: #fffdf7;
+  border: 1px dashed #d4cfbe;
+  border-radius: 10px;
+}
+.slip__head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.slip__head b { color: var(--ink-strong); font-size: 13px; font-weight: 700; letter-spacing: .04em; }
+.slip__head span { color: #8a8371; font-size: 12px; }
+.slip__number {
+  padding: 8px 0;
+  text-align: center;
+  color: var(--ink-strong);
+  border-top: 1px dashed #e0dbca; border-bottom: 1px dashed #e0dbca;
+  font-size: 22px; font-weight: 600; letter-spacing: .08em;
+}
+.slip__meta { margin: 0; display: flex; gap: 24px; }
+.slip__meta div { display: flex; flex-direction: column; gap: 2px; }
+.slip__meta dt { color: #9a9383; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+.slip__meta dd { margin: 0; color: #4f4a3d; font-size: 12px; }
+.slip__foot { color: #8a8371; font-size: 11px; letter-spacing: .02em; }
+
+@media print {
+  .proto__tabs, .topbar, .sticky-foot, .notice, .section:not(:has(.slip)), .receipt-head { display: none !important; }
+  .phone { border: 0; box-shadow: none; height: auto; }
+  .slip { border-color: #999; }
+}
