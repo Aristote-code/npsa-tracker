@@ -1,4 +1,5 @@
 import type { Translate } from "@/i18n";
+import { formatReference } from "@/reference";
 import type { Application } from "@/types";
 
 /**
@@ -18,7 +19,7 @@ export function citizenAnswer(application: Application, i18n: Translate): string
   const position = `${index >= 0 ? index + 1 : application.stages.length}/${application.stages.length}`;
 
   const parts = [
-    `${application.reference} — ${t(application.serviceKey)}.`,
+    `${formatReference(application.reference)} — ${t(application.serviceKey)}.`,
     `${position}: ${t(stage.labelKey)} (${t(stage.deptKey)}).`,
   ];
 

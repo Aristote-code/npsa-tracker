@@ -6,6 +6,7 @@ import { Page } from "@/components/Page";
 import * as FancyButton from "@/components/ui/fancy-button";
 import { applications, findByReference } from "@/data";
 import { useI18n } from "@/i18n";
+import { checkReference, formatReference, normalizeReference, REFERENCE_LENGTH } from "@/reference";
 import type { Application } from "@/types";
 
 type LookupProps = {
@@ -13,17 +14,43 @@ type LookupProps = {
   onNeedHelp: () => void;
 };
 
+type Problem = "incomplete" | "mistyped" | "notFound" | null;
+
 export function Lookup({ onFound, onNeedHelp }: LookupProps) {
   const { t } = useI18n();
   const [value, setValue] = React.useState("");
-  const [notFound, setNotFound] = React.useState(false);
+  const [problem, setProblem] = React.useState<Problem>(null);
+
+  const digits = normalizeReference(value);
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    // Checked on the handset. A mistyped number is caught here, free, rather
+    // than after a round trip the citizen paid for.
+    const check = checkReference(value);
+    if (check === "incomplete" || check === "empty") {
+      setProblem("incomplete");
+      return;
+    }
+    if (check === "mistyped") {
+      setProblem("mistyped");
+      return;
+    }
+
     const match = findByReference(value);
     if (match) onFound(match);
-    else setNotFound(true);
+    else setProblem("notFound");
   };
+
+  const message =
+    problem === "incomplete"
+      ? { body: t("refIncomplete") }
+      : problem === "mistyped"
+        ? { body: t("refMistyped") }
+        : problem === "notFound"
+          ? { title: t("notFoundTitle"), body: t("notFoundBody") }
+          : null;
 
   return (
     <Page>
@@ -38,23 +65,27 @@ export function Lookup({ onFound, onNeedHelp }: LookupProps) {
           <input
             id="reference"
             name="reference"
-            className="input mono"
+            className="input input--ref mono"
             value={value}
+            /* Digits only, so an Android raises the number pad, not QWERTY. */
+            inputMode="numeric"
+            pattern="[0-9 ]*"
             autoComplete="off"
-            autoCapitalize="characters"
             spellCheck={false}
-            aria-invalid={notFound}
-            aria-describedby={notFound ? "reference-error" : "reference-hint"}
+            maxLength={REFERENCE_LENGTH + 2}
+            aria-invalid={problem !== null}
+            aria-describedby={problem ? "reference-problem" : "reference-hint"}
             onChange={(event) => {
-              setValue(event.target.value);
-              setNotFound(false);
+              setValue(formatReference(event.target.value.replace(/\D/g, "")));
+              setProblem(null);
             }}
           />
-          {notFound ? (
-            <p className="field__error" id="reference-error" role="alert">
+          {message ? (
+            <p className="field__error" id="reference-problem" role="alert">
               <Icon icon={Alert02Icon} size={15} strokeWidth={2} />
               <span>
-                <b>{t("notFoundTitle")}</b> {t("notFoundBody")}
+                {message.title && <b>{message.title} </b>}
+                {message.body}
               </span>
             </p>
           ) : (
@@ -64,7 +95,12 @@ export function Lookup({ onFound, onNeedHelp }: LookupProps) {
           )}
         </div>
 
-        <FancyButton.Root variant="primary" size="medium" type="submit" disabled={!value.trim()}>
+        <FancyButton.Root
+          variant="primary"
+          size="medium"
+          type="submit"
+          disabled={digits.length < REFERENCE_LENGTH}
+        >
           <FancyButton.Icon as="span">
             <Icon icon={Search01Icon} size={18} />
           </FancyButton.Icon>
@@ -75,22 +111,33 @@ export function Lookup({ onFound, onNeedHelp }: LookupProps) {
           {t("noReference")}
         </button>
 
-        {/* Prototype data, so a reviewer can get in without guessing. */}
+        {/* Prototype data, so a reviewer can get in without guessing. The last
+            chip is a valid-looking number with a bad check digit. */}
         <div className="demo-refs">
-          <span>Prototype references</span>
+          <span>Prototype numbers</span>
           {applications.map((application) => (
             <button
               key={application.id}
               type="button"
               className="mono"
               onClick={() => {
-                setValue(application.reference);
-                setNotFound(false);
+                setValue(formatReference(application.reference));
+                setProblem(null);
               }}
             >
-              {application.reference}
+              {formatReference(application.reference)}
             </button>
           ))}
+          <button
+            type="button"
+            className="mono"
+            onClick={() => {
+              setValue(formatReference("260051320"));
+              setProblem(null);
+            }}
+          >
+            260 051 320
+          </button>
         </div>
       </form>
     </Page>

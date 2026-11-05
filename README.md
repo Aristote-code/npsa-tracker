@@ -3,6 +3,11 @@
 Interactive prototype for the UI/UX practical assessment. Three audiences from the
 brief, side by side behind the tabs at the top of the page.
 
+**Live:**
+[Citizen (phone)](https://npsa-tracker.netlify.app/#/citizen) ·
+[Officer (desktop)](https://npsa-tracker.netlify.app/#/officer) ·
+[No smartphone (USSD & SMS)](https://npsa-tracker.netlify.app/#/phone)
+
 ```bash
 npm install
 npm run dev
@@ -30,11 +35,20 @@ budget and counted in Kinyarwanda, which runs longest. Session timeout included.
 Language switches between Kinyarwanda, English and French everywhere, with real
 strings in all three.
 
+## The file number
+
+Nine digits, no letters, shown in threes: `260 051 230`. The last digit is a Luhn
+check digit, so a mistyped number is caught on the handset before any lookup —
+free, and before a USSD round trip. One identifier works unchanged on the paper
+receipt, in the SMS, on a USSD keypad, in the citizen app and in Aline's search
+box, with no mapping step anywhere.
+
 ## Prototype controls
 
 Quiet, grey affordances marked as prototype furniture: reference chips on the
-lookup screen, the verification code `12345`, "No network" and "Drop mid-send"
-on the upload screen, the role switch, and the USSD session-timeout button.
+lookup screen (including `260 051 320`, which fails the check digit), the
+verification code `12345`, "No network" and "Drop mid-send" on the upload screen,
+the role switch, and the USSD session-timeout button.
 
 ## Source
 

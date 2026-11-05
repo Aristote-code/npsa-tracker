@@ -4,6 +4,7 @@ import { Icon } from "@/components/Icon";
 import { Page } from "@/components/Page";
 import * as FancyButton from "@/components/ui/fancy-button";
 import { useI18n } from "@/i18n";
+import { formatReference } from "@/reference";
 import type { Application } from "@/types";
 
 type ReceivedProps = {
@@ -42,7 +43,7 @@ export function Received({ application, onDone }: ReceivedProps) {
             the day — it is the channel that actually reaches people. */}
         <div className="section sms">
           <h2>{t("smsPreview")}</h2>
-          <div className="sms__bubble">{t("smsBody", { ref: application.reference })}</div>
+          <div className="sms__bubble">{t("smsBody", { ref: formatReference(application.reference) })}</div>
           <span className="sms__from">
             <Icon icon={Message01Icon} size={13} />
             NPSA · 1234

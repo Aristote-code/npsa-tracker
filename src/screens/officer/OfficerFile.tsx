@@ -16,6 +16,7 @@ import { SidePanel } from "@/components/SidePanel";
 import { StatusPill } from "@/components/StatusPill";
 import * as FancyButton from "@/components/ui/fancy-button";
 import { createTranslate, useI18n } from "@/i18n";
+import { formatReference } from "@/reference";
 import type { StringKey } from "@/i18n/strings";
 import { citizenAnswer } from "@/screens/officer/answer";
 import type { Application, OfficerRole } from "@/types";
@@ -78,7 +79,7 @@ export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
           <span>
             <b>{application.citizenName}</b>
             <small>
-              <span className="mono">{application.reference}</span> · {t(application.serviceKey)}
+              <span className="mono">{formatReference(application.reference)}</span> · {t(application.serviceKey)}
             </small>
           </span>
         </span>

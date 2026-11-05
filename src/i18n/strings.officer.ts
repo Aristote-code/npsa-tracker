@@ -6,11 +6,15 @@
  * is the whole point — free text cannot be translated at the moment it is
  * written.
  *
- * The `ussd.*` strings are the ones that go down the USSD channel. They are
- * deliberately plain ASCII with no accents, because the network encodes them
- * in GSM 7-bit, and they are written to fit inside one 182-character screen
- * in all three languages — Kinyarwanda, which runs longest, is the budget
- * that matters.
+ * The `ussd.*` strings travel over the USSD channel, which encodes them in the
+ * GSM 7-bit default alphabet. That alphabet carries à è é ì ò ù ä ö ü ñ å Ç and
+ * É, so French keeps its accents — but it has no lowercase ç. A single "ç"
+ * forces the whole message to UCS-2 and the budget collapses from 182
+ * characters to 70, so "Francais" is spelled without its cedilla on purpose,
+ * and "reçu" is avoided in favour of "numéro".
+ *
+ * Every screen is written to fit one 182-character response, counted in
+ * Kinyarwanda, which runs longest of the three.
  */
 
 const en = {
@@ -123,19 +127,19 @@ const en = {
   "ussd.lang": "NPSA\nHitamo ururimi\nChoose language\n1) Kinyarwanda\n2) English\n3) Francais",
   "ussd.menu": "NPSA\n1) My applications\n2) Enter file number\n3) Change language\n4) Exit",
   "ussd.list":
-    "Your applications\n1) 05123 Business reg.\n2) 04817 Building permit\n9) Exit\n99) Back",
-  "ussd.ask": "Enter the last 5 digits of your file number.\nExample: 05123\n9) Exit\n99) Back",
+    "Your applications\n1) 260 051 230 Business reg.\n2) 260 048 178 Building permit\n9) Exit\n99) Back",
+  "ussd.ask": "Enter your 9-digit file number.\nExample: 260 051 230\n9) Exit\n99) Back",
   "ussd.statusAction":
-    "05123 Business reg.\nStep 2/5 Documents checked\nNEEDED: lease photo too dark. Any NPSA office sends it free.\nUpdated 05/11\n99) Back",
+    "260 051 230 Business reg.\nStep 2/5 Documents checked\nNEEDED: lease photo too dark. Any NPSA office sends it free.\nUpdated 05/11\n99) Back",
   "ussd.statusReview":
-    "04817 Building permit\nStep 3/5 Technical review\nNothing needed from you. Expected by 21/11.\nUpdated 04/11\n99) Back",
+    "260 048 178 Building permit\nStep 3/5 Technical review\nNothing needed from you. Expected by 21/11.\nUpdated 04/11\n99) Back",
   "ussd.notFound":
-    "Not found.\nCheck your receipt, or visit any NPSA office. It is free.\n1) Try again\n9) Exit",
+    "Not found.\nCheck the number on your receipt, or visit any NPSA office. It is free.\n1) Try again\n9) Exit",
   "ussd.timeout": "Your session has ended.\nDial *123# to start again.",
 
-  "u.smsStage": "NPSA: NPSA-2026-05123 moved to Business name check (Registrar's Office). Nothing needed from you. Reply is free: dial *123#",
-  "u.smsAction": "NPSA: NPSA-2026-05123 needs a clearer lease agreement photo. Any NPSA office will send it for you, free. Details: dial *123#",
-  "u.smsDone": "NPSA: NPSA-2026-05123 is approved. Collect your certificate at the issuing desk with your ID. This service is free.",
+  "u.smsStage": "NPSA: 260 051 230 moved to Business name check (Registrar's Office). Nothing needed from you. Reply is free: dial *123#",
+  "u.smsAction": "NPSA: 260 051 230 needs a clearer lease agreement photo. Any NPSA office will send it for you, free. Details: dial *123#",
+  "u.smsDone": "NPSA: 260 051 230 is approved. Collect your certificate at the issuing desk with your ID. This service is free.",
 };
 
 export type OfficerDict = typeof en;
@@ -241,22 +245,24 @@ const rw: OfficerDict = {
 
   "ussd.lang": "NPSA\nHitamo ururimi\nChoose language\n1) Kinyarwanda\n2) English\n3) Francais",
   "ussd.menu": "NPSA\n1) Dosiye zanjye\n2) Andika nimero\n3) Hindura ururimi\n4) Sohoka",
-  "ussd.list": "Dosiye zawe\n1) 05123 Ubucuruzi\n2) 04817 Uruhushya\n9) Sohoka\n99) Subira",
-  "ussd.ask": "Andika imibare 5 ya nyuma ya nimero ya dosiye.\nUrugero: 05123\n9) Sohoka\n99) Subira",
+  "ussd.list":
+    "Dosiye zawe\n1) 260 051 230 Ubucuruzi\n2) 260 048 178 Uruhushya\n9) Sohoka\n99) Subira",
+  "ussd.ask":
+    "Andika imibare 9 ya nimero ya dosiye.\nUrugero: 260 051 230\n9) Sohoka\n99) Subira",
   "ussd.statusAction":
-    "05123 Ubucuruzi\nIcyiciro 2/5 Inyandiko\nBISABWA: ifoto y'ubukode yijimye. Ibiro bya NPSA birayohereza ku buntu.\n05/11\n99) Subira",
+    "260 051 230 Ubucuruzi\nIcyiciro 2/5 Inyandiko\nBISABWA: ifoto y'ubukode yijimye. Ibiro bya NPSA birayohereza ku buntu.\n05/11\n99) Subira",
   "ussd.statusReview":
-    "04817 Uruhushya\nIcyiciro 3/5 Tekiniki\nNta kibasabwa. Biteganyijwe 21/11.\n04/11\n99) Subira",
+    "260 048 178 Uruhushya\nIcyiciro 3/5 Tekiniki\nNta kibasabwa. Biteganyijwe 21/11.\n04/11\n99) Subira",
   "ussd.notFound":
     "Ntiyabonetse.\nReba urupapuro, cyangwa usure ibiro bya NPSA. Ni ubuntu.\n1) Ongera\n9) Sohoka",
   "ussd.timeout": "Igihe cyawe cyarangiye.\nKanda *123# wongere.",
 
   "u.smsStage":
-    "NPSA: NPSA-2026-05123 yimukiye ku isuzuma ry'izina (Ibiro by'iyandikwa). Nta kibasabwa. Kanda *123# ku buntu.",
+    "NPSA: 260 051 230 yimukiye ku isuzuma ry'izina (Ibiro by'iyandikwa). Nta kibasabwa. Kanda *123# ku buntu.",
   "u.smsAction":
-    "NPSA: NPSA-2026-05123 isaba ifoto isomeka y'amasezerano y'ubukode. Ibiro bya NPSA birayikohereza ku buntu. Kanda *123#",
+    "NPSA: 260 051 230 isaba ifoto isomeka y'amasezerano y'ubukode. Ibiro bya NPSA birayikohereza ku buntu. Kanda *123#",
   "u.smsDone":
-    "NPSA: NPSA-2026-05123 yemejwe. Fata icyemezo ku cyumba cyo gutanga ufite indangamuntu. Ni ubuntu.",
+    "NPSA: 260 051 230 yemejwe. Fata icyemezo ku cyumba cyo gutanga ufite indangamuntu. Ni ubuntu.",
 };
 
 const fr: OfficerDict = {
@@ -359,24 +365,25 @@ const fr: OfficerDict = {
     "182 caractères, comptés en kinyarwanda parce que c'est la langue la plus longue. Les phrases rassurantes n'entrent pas : elles passent par SMS.",
 
   "ussd.lang": "NPSA\nHitamo ururimi\nChoose language\n1) Kinyarwanda\n2) English\n3) Francais",
-  "ussd.menu": "NPSA\n1) Mes demandes\n2) Entrer un numero\n3) Changer de langue\n4) Quitter",
-  "ussd.list": "Vos demandes\n1) 05123 Entreprise\n2) 04817 Permis\n9) Quitter\n99) Retour",
+  "ussd.menu": "NPSA\n1) Mes demandes\n2) Entrer un numéro\n3) Changer de langue\n4) Quitter",
+  "ussd.list":
+    "Vos demandes\n1) 260 051 230 Entreprise\n2) 260 048 178 Permis\n9) Quitter\n99) Retour",
   "ussd.ask":
-    "Entrez les 5 derniers chiffres de votre dossier.\nExemple: 05123\n9) Quitter\n99) Retour",
+    "Entrez vos 9 chiffres de dossier.\nExemple: 260 051 230\n9) Quitter\n99) Retour",
   "ussd.statusAction":
-    "05123 Entreprise\nEtape 2/5 Documents\nDEMANDE: photo du bail trop sombre. Tout bureau NPSA l'envoie gratuitement.\nMaj 05/11\n99) Retour",
+    "260 051 230 Entreprise\nÉtape 2/5 Documents\nDEMANDE: photo du bail trop sombre. Tout bureau NPSA l'envoie gratuitement.\nMaj 05/11\n99) Retour",
   "ussd.statusReview":
-    "04817 Permis\nEtape 3/5 Technique\nRien n'est demande. Prevu le 21/11.\nMaj 04/11\n99) Retour",
+    "260 048 178 Permis\nÉtape 3/5 Technique\nRien n'est demandé. Prévu le 21/11.\nMaj 04/11\n99) Retour",
   "ussd.notFound":
-    "Introuvable.\nVerifiez votre recu, ou passez dans un bureau NPSA. C'est gratuit.\n1) Reessayer\n9) Quitter",
-  "ussd.timeout": "Votre session est terminee.\nComposez *123# pour recommencer.",
+    "Introuvable.\nVérifiez votre numéro, ou passez dans un bureau NPSA. C'est gratuit.\n1) Réessayer\n9) Quitter",
+  "ussd.timeout": "Votre session est terminée.\nComposez *123# pour recommencer.",
 
   "u.smsStage":
-    "NPSA : NPSA-2026-05123 passe à la vérification du nom (Bureau du registre). Rien n'est demandé. Composez *123#, gratuit.",
+    "NPSA : 260 051 230 passe à la vérification du nom (Bureau du registre). Rien n'est demandé. Composez *123#, gratuit.",
   "u.smsAction":
-    "NPSA : NPSA-2026-05123 demande une photo lisible du bail. Tout bureau NPSA l'enverra pour vous, gratuitement. *123#",
+    "NPSA : 260 051 230 demande une photo lisible du bail. Tout bureau NPSA l'enverra pour vous, gratuitement. *123#",
   "u.smsDone":
-    "NPSA : NPSA-2026-05123 est approuvée. Retirez votre certificat au guichet avec votre pièce d'identité. Service gratuit.",
+    "NPSA : 260 051 230 est approuvée. Retirez votre certificat au guichet avec votre pièce d'identité. Service gratuit.",
 };
 
 export const officer = { en, rw, fr };

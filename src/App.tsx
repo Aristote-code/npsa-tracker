@@ -13,9 +13,29 @@ const VIEWS: Array<{ id: View; label: string; note: string }> = [
   { id: "phone", label: "No smartphone", note: "USSD & SMS" },
 ];
 
+const IDS = VIEWS.map((option) => option.id);
+
+function viewFromHash(): View {
+  const hash = window.location.hash.replace(/^#\/?/, "");
+  return (IDS as string[]).includes(hash) ? (hash as View) : "citizen";
+}
+
 export function App() {
   const [locale, setLocale] = React.useState<Locale>("en");
-  const [view, setView] = React.useState<View>("citizen");
+  /* Each audience has its own address, so the three can be sent as three
+     links rather than as one link plus an instruction. */
+  const [view, setView] = React.useState<View>(viewFromHash);
+
+  React.useEffect(() => {
+    const onHashChange = () => setView(viewFromHash());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const show = (next: View) => {
+    window.location.hash = `/${next}`;
+    setView(next);
+  };
 
   const i18n = React.useMemo(() => createTranslate(locale, setLocale), [locale]);
 
@@ -30,7 +50,7 @@ export function App() {
               key={option.id}
               type="button"
               aria-pressed={view === option.id}
-              onClick={() => setView(option.id)}
+              onClick={() => show(option.id)}
             >
               <b>{option.label}</b>
               <small>{option.note}</small>

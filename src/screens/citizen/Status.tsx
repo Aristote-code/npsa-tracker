@@ -16,6 +16,7 @@ import { StatusPill } from "@/components/StatusPill";
 import { Stepper } from "@/components/Stepper";
 import * as FancyButton from "@/components/ui/fancy-button";
 import { useI18n } from "@/i18n";
+import { formatReference } from "@/reference";
 import type { Application } from "@/types";
 
 type StatusProps = {
@@ -43,7 +44,7 @@ export function Status({ application, verified, onBack, onSeeWhatIsNeeded }: Sta
 
   const copyReference = async () => {
     try {
-      await navigator.clipboard.writeText(application.reference);
+      await navigator.clipboard.writeText(formatReference(application.reference));
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -58,7 +59,7 @@ export function Status({ application, verified, onBack, onSeeWhatIsNeeded }: Sta
       <div className="page-head">
         <h1>{t(application.serviceKey)}</h1>
         <div className="ref-row">
-          <b className="mono">{application.reference}</b>
+          <b className="mono">{formatReference(application.reference)}</b>
           <button type="button" className="ref-copy" onClick={copyReference} data-copied={copied}>
             <Icon icon={copied ? Tick02Icon : Copy01Icon} size={14} strokeWidth={2} />
             {copied ? t("copied") : t("copyReference")}

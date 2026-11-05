@@ -5,6 +5,7 @@ import { Icon } from "@/components/Icon";
 import { StatusPill } from "@/components/StatusPill";
 import { applications, searchApplications } from "@/data";
 import { useI18n } from "@/i18n";
+import { formatReference } from "@/reference";
 import type { Application, OfficerRole } from "@/types";
 
 type OfficerQueueProps = {
@@ -108,7 +109,7 @@ export function OfficerQueue({ role, onOpen }: OfficerQueueProps) {
                   </td>
                   <td>
                     <span className="o-claim">
-                      <b className="mono">{application.reference}</b>
+                      <b className="mono">{formatReference(application.reference)}</b>
                       <small>{t(application.serviceKey)}</small>
                     </span>
                   </td>

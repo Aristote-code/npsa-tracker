@@ -1,3 +1,4 @@
+import { normalizeReference } from "@/reference";
 import type { Application, Officer, OfficerRole } from "@/types";
 
 /** The officer signed in to the desktop side of the prototype. */
@@ -26,7 +27,7 @@ const lands: Officer = {
 export const applications: Application[] = [
   {
     id: "business",
-    reference: "NPSA-2026-05123",
+    reference: "260051230",
     serviceKey: "service.business",
     citizenName: "Claudine Ishimwe",
     citizenInitials: "C",
@@ -76,7 +77,7 @@ export const applications: Application[] = [
   },
   {
     id: "permit",
-    reference: "NPSA-2026-04817",
+    reference: "260048178",
     serviceKey: "service.permit",
     citizenName: "Jean Bosco Nkurunziza",
     citizenInitials: "J",
@@ -108,7 +109,7 @@ export const applications: Application[] = [
     // A citizen who has already answered: the officer's third required task is
     // to look at what came back and decide.
     id: "responded",
-    reference: "NPSA-2026-05061",
+    reference: "260050612",
     serviceKey: "service.business",
     citizenName: "Marie Ingabire",
     citizenInitials: "M",
@@ -157,10 +158,10 @@ export const applications: Application[] = [
   },
 ];
 
-/** Reference lookup is deliberately forgiving about case and stray spaces. */
+/** Spaces are display sugar, so "260 051 230" and "260051230" both match. */
 export function findByReference(input: string): Application | undefined {
-  const needle = input.trim().toUpperCase().replace(/\s+/g, "");
-  return applications.find((application) => application.reference.toUpperCase() === needle);
+  const needle = normalizeReference(input);
+  return applications.find((application) => application.reference === needle);
 }
 
 /** Officer search: reference, phone number or name — a caller rarely has all three. */
@@ -170,7 +171,9 @@ export function searchApplications(query: string): Application[] {
   const digits = needle.replace(/\D/g, "");
 
   return applications.filter((application) => {
-    if (application.reference.toLowerCase().includes(needle)) return true;
+    // The caller may read the number out with or without its spaces, and may
+    // give a phone number or a name instead — all three have to land.
+    if (digits.length >= 3 && application.reference.includes(digits)) return true;
     if (application.citizenName.toLowerCase().includes(needle)) return true;
     if (digits.length >= 3 && application.citizenPhone.replace(/\D/g, "").includes(digits)) return true;
     return false;

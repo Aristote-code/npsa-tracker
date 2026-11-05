@@ -5,6 +5,7 @@ import { Icon } from "@/components/Icon";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useI18n, type Locale } from "@/i18n";
 import { dictionaries, type StringKey } from "@/i18n/strings";
+import { normalizeReference } from "@/reference";
 
 type Screen =
   | "lang"
@@ -62,6 +63,7 @@ export function FeaturePhone() {
 
   const reply = () => {
     const value = entry.trim();
+    const digitsOnly = normalizeReference(value);
     setEntry("");
     if (!value) return;
 
@@ -89,8 +91,8 @@ export function FeaturePhone() {
       case "ask":
         if (value === "99") setScreen("menu");
         else if (value === "9") setScreen("timeout");
-        else if (value === "05123") setScreen("statusAction");
-        else if (value === "04817") setScreen("statusReview");
+        else if (digitsOnly === "260051230") setScreen("statusAction");
+        else if (digitsOnly === "260048178") setScreen("statusReview");
         else setScreen("notFound");
         return;
       case "statusAction":
@@ -126,46 +128,57 @@ export function FeaturePhone() {
           <p className="u-dial mono">{t("u.dial", { code: "*123#" })}</p>
 
           <div className="handset">
-            {/* Whatever the phone was already showing. USSD interrupts it. */}
-            <div className="handset__idle" aria-hidden="true">
-              <div className="handset__statusbar">
+            <div className="handset__screen">
+              {/* The status bar belongs to the phone and stays crisp above the
+                  dialog, exactly as it does on a real handset. */}
+              <div className="handset__statusbar" aria-hidden="true">
                 <span>MTN RW</span>
                 <span>11:13</span>
               </div>
-              <div className="handset__clock">11:13</div>
-              <div className="handset__softkeys">
-                <span>Menu</span>
-                <span>Names</span>
+
+              <div className="handset__stage">
+                {/* Whatever the phone was showing. The dialog covers it. */}
+                <div className="handset__idle" aria-hidden="true">
+                  <div className="handset__clock">11:13</div>
+                  <div className="handset__softkeys">
+                    <span>Menu</span>
+                    <span>Names</span>
+                  </div>
+                </div>
+
+                {screen !== "timeout" ? (
+                  <div className="ussd" role="dialog" aria-label="USSD">
+                    <div className="ussd__chrome">
+                      <button
+                        type="button"
+                        className="ussd__pill"
+                        onClick={() => setScreen("timeout")}
+                      >
+                        {t("u.cancel")}
+                      </button>
+                      <span className="ussd__title">{t("u.send")}</span>
+                      <button type="button" className="ussd__pill" onClick={reply}>
+                        {t("u.send")}
+                      </button>
+                    </div>
+
+                    <pre className="ussd__body">{body}</pre>
+
+                    <div className="ussd__field">{entry}</div>
+                    <div className="ussd__count">
+                      {t("u.charsLeft", { n: Math.max(0, LIMIT - entry.length) })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="ussd ussd--ended" role="dialog" aria-label="USSD">
+                    <pre className="ussd__body">{t("ussd.timeout")}</pre>
+                    <button type="button" className="ussd__pill ussd__pill--wide" onClick={restart}>
+                      {t("u.reset")}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
-
-            {screen !== "timeout" ? (
-              <div className="ussd" role="dialog" aria-label="USSD">
-                <div className="ussd__chrome">
-                  <button type="button" className="ussd__pill" onClick={() => setScreen("timeout")}>
-                    {t("u.cancel")}
-                  </button>
-                  <span className="ussd__title">{t("u.send")}</span>
-                  <button type="button" className="ussd__pill" onClick={reply}>
-                    {t("u.send")}
-                  </button>
-                </div>
-
-                <pre className="ussd__body">{body}</pre>
-
-                <div className="ussd__field">{entry}</div>
-                <div className="ussd__count">
-                  {t("u.charsLeft", { n: Math.max(0, LIMIT - entry.length) })}
-                </div>
-              </div>
-            ) : (
-              <div className="ussd ussd--ended" role="dialog" aria-label="USSD">
-                <pre className="ussd__body">{t("ussd.timeout")}</pre>
-                <button type="button" className="ussd__pill ussd__pill--wide" onClick={restart}>
-                  {t("u.reset")}
-                </button>
-              </div>
-            )}
 
             {/* A feature phone's keypad: digits only, which is why every step
                 of the menu is a number. */}
