@@ -12,6 +12,8 @@ type PageProps = {
   footer?: React.ReactNode;
   /** Skip the standard content padding, for full-bleed screens. */
   bare?: boolean;
+  /** The front door, where all three languages stay visible. */
+  entry?: boolean;
   children: React.ReactNode;
 };
 
@@ -28,7 +30,7 @@ type PageProps = {
  * when the history stack is empty — which it is whenever someone arrives from
  * an SMS link.
  */
-export function Page({ compactTitle, onBack, footer, bare, children }: PageProps) {
+export function Page({ compactTitle, onBack, footer, bare, entry, children }: PageProps) {
   const { t } = useI18n();
   const [scrolled, setScrolled] = React.useState(false);
   const scroller = React.useRef<HTMLDivElement>(null);
@@ -64,7 +66,7 @@ export function Page({ compactTitle, onBack, footer, bare, children }: PageProps
           </span>
         )}
 
-        <LanguageSwitcher />
+        <LanguageSwitcher variant={entry ? "full" : "compact"} />
       </header>
 
       <div

@@ -105,10 +105,11 @@ img { display: block; max-width: 100%; }
   color: var(--muted); font-size: 11px; line-height: 14px;
 }
 .topbar__back {
-  width: 40px; height: 40px; flex: none; margin-left: -8px;
+  /* 48dp, like every other target on these screens. */
+  width: 48px; height: 48px; flex: none; margin-left: -10px;
   display: grid; place-items: center;
   color: var(--ink-strong);
-  border-radius: 10px;
+  border-radius: 11px;
 }
 .topbar__back:hover { background: #f1f2f4; }
 .topbar__title { min-width: 0; flex: 1; font-size: 15px; font-weight: 600; }
@@ -1506,3 +1507,40 @@ img { display: block; max-width: 100%; }
 /* The queue is a desktop table with a fixed identity column; squashing it
    below the design width overlapped the cells. It scrolls instead. */
 .queue-table { min-width: 900px; }
+
+/* ------------------------------------------------- language control ----- */
+
+/* 48px targets: the control that most needs to be hittable by someone on an
+   old handset was the smallest thing in the app. */
+.topbar { min-height: 60px; padding: 5px 16px; }
+.lang button { min-width: 48px; height: 48px; border-radius: 9px; font-size: 13px; }
+
+/* Inner screens: current language only, the rest behind a sheet. */
+.lang-compact {
+  width: 48px; height: 48px; flex: none;
+  margin-left: auto;
+  display: grid; place-items: center;
+  color: var(--ink-strong);
+  background: #f1f2f4;
+  border-radius: 11px;
+  font-size: 13px; font-weight: 600; letter-spacing: .01em;
+}
+.lang-compact:hover { background: #e8eaee; }
+
+.lang-list { display: flex; flex-direction: column; gap: 8px; }
+.lang-list button {
+  min-height: 56px;
+  padding: 0 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 16px;
+}
+.lang-list button:hover { background: #fafbff; }
+.lang-list button[aria-pressed="true"] {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: var(--blue-soft);
+  font-weight: 600;
+}

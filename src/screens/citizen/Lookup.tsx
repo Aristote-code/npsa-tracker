@@ -56,7 +56,7 @@ export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
           : null;
 
   return (
-    <Page>
+    <Page entry>
       <form className="form" onSubmit={submit} noValidate>
         <h1 className="lookup-title">{t("lookupTitle")}</h1>
 
@@ -110,7 +110,7 @@ export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
             fourth number is a transposition that fails the check digit. */}
         <div className="demo-refs">
           <span>Prototype numbers</span>
-          {applications.map((application) => (
+          {applications.slice(0, 3).map((application) => (
             <button
               key={application.id}
               type="button"
