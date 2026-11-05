@@ -16,6 +16,7 @@ import { Icon } from "@/components/Icon";
 import { SidePanel } from "@/components/SidePanel";
 import { StatusPill } from "@/components/StatusPill";
 import * as FancyButton from "@/components/ui/fancy-button";
+import { avatarColour } from "@/avatar";
 import { signedInOfficer } from "@/data";
 import { createTranslate, useI18n, type Locale } from "@/i18n";
 import { formatReference } from "@/reference";
@@ -54,9 +55,15 @@ export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
   const answer = citizenAnswer(application, i18n);
   const canChange = role === "processing";
 
+  // A call note outlives this screen, so the clipboard carries the "as of"
+  // time even though the band is what shows it here. The button says so,
+  // because a Copy that quietly adds text nobody can see is the same lie
+  // this panel exists to avoid.
+  const asOf = t("asOf", { time: time(application.updatedAt) });
+
   const copyAnswer = async () => {
     try {
-      await navigator.clipboard.writeText(answer);
+      await navigator.clipboard.writeText(`${answer} ${asOf}.`);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -79,7 +86,9 @@ export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
 
       <header className="o-file__head">
         <span className="o-person o-person--lg">
-          <i>{application.citizenInitials}</i>
+          <i style={{ backgroundImage: avatarColour(application.citizenName) }}>
+            {application.citizenInitials}
+          </i>
           <span>
             <b>{application.citizenName}</b>
             <small>
@@ -119,9 +128,7 @@ export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
             <Icon icon={InformationCircleIcon} size={18} strokeWidth={1.8} />
             {t("o.answer")}
           </span>
-          <span className="o-answer__meta">
-            {t("asOf", { time: time(application.updatedAt) })}
-          </span>
+          <span className="o-answer__meta">{asOf}</span>
         </div>
 
         <div className="o-answer__body">

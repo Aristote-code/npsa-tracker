@@ -1471,17 +1471,21 @@ img { display: block; max-width: 100%; }
 /* Colour only where it means something. */
 .pill--quiet { padding: 0; color: var(--muted); background: none; font-weight: 500; }
 
-/* Flat initials from the neutral ramp — a hue gradient said nothing. */
-.officer__avatar, .o-person > i, .rail__profile {
-  background-image: none;
-  background: #e9ebef;
-  color: #5c6069;
-  font-family: "Certia", Inter, sans-serif;
-  font-weight: 600;
+/* One hue per person, everywhere they appear.
+   The polish pass flattened these, which was right while the queue held
+   three rows; at thirteen it is the opposite, and a chip that is one colour
+   in the queue and another on the file stops meaning anything. The letter is
+   the source's blackletter, sized up so it stays legible. */
+.officer__avatar, .o-person > i, .rail__profile, .citizen-cell > i {
+  color: #fff;
+  font-family: "Cloister Black", "Times New Roman", serif;
+  font-style: normal;
+  font-weight: 400;
 }
-.officer__avatar { font-size: 17px; }
-.o-person > i { font-size: 12px; }
-.rail__profile { background: #e9ebef; color: #5c6069; font-size: 13px; }
+.officer__avatar { width: 42px; height: 42px; font-size: 16px; }
+.o-person > i { font-size: 13px; }
+.o-person--lg > i { font-size: 18px; }
+.rail__profile { font-size: 15px; }
 
 /* A button is a button; it does not also need an underline. */
 .fancy-button, .fancy-button:hover { text-decoration: none; }
@@ -1498,3 +1502,7 @@ img { display: block; max-width: 100%; }
 }
 
 .proto__tabs button { padding: 8px 14px; font-size: 13px; font-weight: 600; }
+
+/* The queue is a desktop table with a fixed identity column; squashing it
+   below the design width overlapped the cells. It scrolls instead. */
+.queue-table { min-width: 900px; }

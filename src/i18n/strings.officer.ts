@@ -41,7 +41,7 @@ const en = {
   // --------------------------------------------------------------- file --
   "o.answer": "What the citizen sees",
   "o.answerHint": "Read this out, or copy it into a call note",
-  "o.copyAnswer": "Copy answer",
+  "o.copyAnswer": "Copy answer and time",
   "o.answerCopied": "Copied",
   "o.citizenPhone": "Phone",
   "o.lastUpdate": "Last update",
@@ -163,7 +163,7 @@ const rw: OfficerDict = {
 
   "o.answer": "Ibyo umuturage abona",
   "o.answerHint": "Musomere ibi, cyangwa ubifate kopi",
-  "o.copyAnswer": "Fata kopi y'igisubizo",
+  "o.copyAnswer": "Fata kopi n'isaha",
   "o.answerCopied": "Byafashwe",
   "o.citizenPhone": "Telefone",
   "o.lastUpdate": "Ivugururwa riheruka",
@@ -281,7 +281,7 @@ const fr: OfficerDict = {
 
   "o.answer": "Ce que voit le citoyen",
   "o.answerHint": "Lisez ceci à voix haute, ou copiez-le",
-  "o.copyAnswer": "Copier la réponse",
+  "o.copyAnswer": "Copier avec l'heure",
   "o.answerCopied": "Copié",
   "o.citizenPhone": "Téléphone",
   "o.lastUpdate": "Dernière mise à jour",

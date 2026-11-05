@@ -7,6 +7,7 @@ import { StatusPill } from "@/components/StatusPill";
 import { Stepper } from "@/components/Stepper";
 import * as FancyButton from "@/components/ui/fancy-button";
 import { useI18n } from "@/i18n";
+import { avatarColour } from "@/avatar";
 import { formatReference } from "@/reference";
 import type { Application } from "@/types";
 
@@ -120,7 +121,11 @@ export function Status({ application, verified, onBack, onSeeWhatIsNeeded }: Sta
         <h2>{t("whoIsHandling")}</h2>
         <div className="card officer">
           <div className="officer__who">
-            <span className="officer__avatar" aria-hidden="true">
+            <span
+              className="officer__avatar"
+              style={{ backgroundImage: avatarColour(application.officer.name) }}
+              aria-hidden="true"
+            >
               {application.officer.initials}
             </span>
             <div>

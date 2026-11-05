@@ -3,6 +3,7 @@ import { File01Icon, Home01Icon } from "@hugeicons/core-free-icons";
 
 import { Icon } from "@/components/Icon";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { avatarColour } from "@/avatar";
 import { signedInOfficer } from "@/data";
 import { useI18n } from "@/i18n";
 import { OfficerFile } from "@/screens/officer/OfficerFile";
@@ -31,7 +32,11 @@ export function OfficerApp() {
             <Icon icon={Home01Icon} size={19} />
           </button>
         </div>
-        <span className="rail__profile" title={signedInOfficer.name}>
+        <span
+          className="rail__profile"
+          style={{ backgroundImage: avatarColour(signedInOfficer.name) }}
+          title={signedInOfficer.name}
+        >
           {signedInOfficer.initials}
         </span>
       </nav>
