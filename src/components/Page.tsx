@@ -47,7 +47,12 @@ export function Page({ compactTitle, onBack, footer, bare, children }: PageProps
             <Icon icon={ArrowLeft02Icon} size={22} />
           </button>
         ) : (
-          <span className="topbar__brand">{t("agencyShort")}</span>
+          <span className="topbar__brand">
+            <span className="brand" aria-hidden="true">
+              <img src={`${import.meta.env.BASE_URL}brand/mark.svg`} alt="" />
+            </span>
+            {t("agencyShort")}
+          </span>
         )}
 
         {/* Either shown or absent. A half-faded title mid-scroll reads as a

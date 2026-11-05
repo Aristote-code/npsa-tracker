@@ -58,3 +58,23 @@ export function checkReference(input: string): ReferenceCheck {
   if (!hasValidCheckDigit(digits)) return "mistyped";
   return "ok";
 }
+
+/**
+ * Build a valid number from its 8-digit payload. Fixture data goes through
+ * this rather than being typed by hand, so the prototype can never ship a
+ * number that its own lookup would reject.
+ */
+export function withCheckDigit(payload: string): string {
+  let sum = 0;
+  let double = true;
+  for (let index = payload.length - 1; index >= 0; index -= 1) {
+    let value = Number(payload[index]);
+    if (double) {
+      value *= 2;
+      if (value > 9) value -= 9;
+    }
+    sum += value;
+    double = !double;
+  }
+  return payload + String((10 - (sum % 10)) % 10);
+}

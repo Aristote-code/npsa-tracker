@@ -33,7 +33,7 @@ const en = {
   "assisted.1": "find your application and tell you where it is;",
   "assisted.2": "explain anything that is missing, in Kinyarwanda;",
   "assisted.3": "send a missing document for you, from the counter.",
-  assistedFree: "You never have to pay for this.",
+  assistedFree: "You never have to pay for this",
 
   // ------------------------------------------------------------ receipt --
   receiptTitle: "Your application has been sent",
@@ -63,6 +63,7 @@ const en = {
   submittedOn: "Sent on",
   "service.business": "Business registration",
   "service.permit": "Building permit",
+  "service.land": "Land title transfer",
 
   "status.inReview": "In review",
   "status.actionNeeded": "Action needed",
@@ -228,7 +229,7 @@ const rw: typeof en = {
   "assisted.1": "kubona dosiye yawe no kukubwira aho igeze;",
   "assisted.2": "kugusobanurira mu Kinyarwanda icyaburaho cyose;",
   "assisted.3": "kohereza inyandiko ibura akoresheje mudasobwa ye.",
-  assistedFree: "Ntabwo ugomba kubyishyura na rimwe.",
+  assistedFree: "Ntabwo ugomba kubyishyura na rimwe",
 
   receiptTitle: "Dosiye yawe yoherejwe",
   receiptSub: "Bika iyi nimero. Ni yo yonyine ukeneye.",
@@ -255,6 +256,7 @@ const rw: typeof en = {
   submittedOn: "Yoherejwe ku wa",
   "service.business": "Kwiyandikisha kw'ubucuruzi",
   "service.permit": "Uruhushya rwo kubaka",
+  "service.land": "Guhindura nyir'ubutaka",
 
   "status.inReview": "Irimo gusuzumwa",
   "status.actionNeeded": "Hari icyo ukeneye gukora",
@@ -415,7 +417,7 @@ const fr: typeof en = {
   "assisted.1": "retrouver votre demande et vous dire où elle en est ;",
   "assisted.2": "vous expliquer ce qui manque, en kinyarwanda ;",
   "assisted.3": "envoyer un document manquant pour vous, depuis le guichet.",
-  assistedFree: "Vous ne payez jamais pour cela.",
+  assistedFree: "Vous ne payez jamais pour cela",
 
   receiptTitle: "Votre demande a été envoyée",
   receiptSub: "Conservez ce numéro. C'est la seule chose dont vous avez besoin.",
@@ -442,6 +444,7 @@ const fr: typeof en = {
   submittedOn: "Envoyée le",
   "service.business": "Enregistrement d'entreprise",
   "service.permit": "Permis de construire",
+  "service.land": "Transfert de titre foncier",
 
   "status.inReview": "En cours d'examen",
   "status.actionNeeded": "Action requise",

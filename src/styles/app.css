@@ -704,13 +704,13 @@ img { display: block; max-width: 100%; }
 .brand {
   width: 32px; height: 32px;
   display: grid; place-items: center;
-  color: #fff;
-  background: var(--blue);
+  overflow: hidden;
   border: .667px solid #3270ef;
   border-radius: 8px;
+  background: #175eed;
   box-shadow: 0 0 0 .667px #3364c6;
-  font-size: 13px; font-weight: 700;
 }
+.brand img { display: block; width: 20px; height: 16px; }
 .rail__nav { margin-top: 35px; display: flex; flex-direction: column; gap: 14px; }
 .rail__nav button {
   width: 32px; height: 32px;
@@ -755,7 +755,7 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 1px 2px rgba(82, 88, 102, .1), 0 0 0 1px var(--line);
 }
 .o-body { min-height: 0; flex: 1; overflow: auto; }
-.o-screen { max-width: 1280px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 20px; }
+.o-screen { max-width: 1320px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 20px; }
 
 .o-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
 .o-head h1 { margin: 0; color: var(--ink-strong); font-size: 20px; font-weight: 600; letter-spacing: -.3px; }
@@ -792,35 +792,65 @@ img { display: block; max-width: 100%; }
 .o-empty strong { display: block; color: var(--ink-strong); font-size: 15px; font-weight: 600; }
 .o-empty p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
 
-.o-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
-.o-table th {
-  height: 40px; padding: 0 12px;
+/* Queue table — geometry from the source design (verification-workspace).
+   Each cell draws top and left only; the last column adds its right border
+   and the last row its bottom, so lines never double up. */
+.queue-table { width: 100%; overflow: hidden; border-radius: 8px; }
+.queue-row {
+  width: 100%;
+  min-height: 50px;
+  display: grid; grid-template-columns: 243px repeat(4, minmax(0, 1fr));
+  align-items: stretch;
   text-align: left;
-  color: #5c5c5c; font-size: 13px; font-weight: 500;
-  background: #fafafa;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
 }
-.o-table th:first-child { border-left: 1px solid var(--line); border-radius: 8px 0 0 0; }
-.o-table th:last-child { border-right: 1px solid var(--line); border-radius: 0 8px 0 0; }
-.o-table td {
-  height: 62px; padding: 8px 12px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
+.queue-row:not(.queue-table-head) { height: 50px; cursor: pointer; }
+.queue-row > span {
+  min-width: 0;
+  padding: 5px 10px;
+  display: flex; align-items: center;
+  border: 1px solid var(--line); border-right: 0; border-bottom: 0;
+  color: #333; font-size: 14px; line-height: 16px;
 }
-.o-table td:first-child { border-left: 1px solid var(--line); }
-.o-table td:last-child { border-right: 1px solid var(--line); }
-.o-table tbody tr { cursor: pointer; }
-.o-table tbody tr:hover td { background: #fafbff; }
-.o-table tbody tr:focus-visible td { background: #f3f6ff; }
+.queue-row > span:last-child { border-right: 1px solid var(--line); }
+.queue-row:last-child > span { border-bottom: 1px solid var(--line); }
+.queue-row:not(.queue-table-head):hover { background: #fafbff; }
+.queue-row:not(.queue-table-head):focus-visible { background: #f3f6ff; outline: none; }
+.queue-table-head { min-height: 40px; color: #5c5c5c; background: #fafafa; }
+.queue-table-head > span { font-size: 14px; }
+.queue-table-head > span:first-child { border-radius: 8px 0 0 0; }
+.queue-table-head > span:last-child { border-radius: 0 8px 0 0; }
+
+.citizen-cell { gap: 10px; }
+.citizen-cell > i {
+  width: 24px; height: 24px; flex: none;
+  display: grid; place-items: center;
+  overflow: hidden;
+  color: #fff;
+  border-radius: 50%;
+  /* Blackletter initial, as the source frame sets it. */
+  font-family: "Cloister Black", "Times New Roman", serif;
+  font-style: normal; font-size: 12px; line-height: 16px;
+}
+.citizen-cell > span { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.citizen-cell b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 400; }
+.citizen-cell small { color: var(--muted); font-size: 11px; line-height: 13px; }
+.claim-cell { flex-direction: column; align-items: flex-start !important; justify-content: center; }
+.claim-cell b { font-size: 12px; line-height: 16px; font-weight: 500; }
+.claim-cell small { margin-top: 3px; color: #6c717a; font-size: 12px; line-height: 15px; }
+
+.queue-counts { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+.queue-counts span { display: flex; align-items: baseline; gap: 7px; }
+.queue-counts strong { color: #333; font-size: 20px; line-height: 30px; font-weight: 700; }
+.queue-counts i { width: 1px; height: 26px; margin: 0 8px; background: var(--line-strong); }
+
+/* Identity block on the file view (shared with the queue's "when" column). */
 .o-person { display: flex; align-items: center; gap: 10px; }
 .o-person > i {
   width: 28px; height: 28px; flex: none;
   display: grid; place-items: center;
+  overflow: hidden;
   color: #fff;
-  background-image: linear-gradient(135deg, #80d9e5 0%, #59a6d9 70.711%);
   border-radius: 50%;
-  font-family: "Cloister Black", "Times New Roman", serif;
   font-style: normal; font-size: 13px;
 }
 .o-person > span { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -829,9 +859,6 @@ img { display: block; max-width: 100%; }
 .o-person--lg > i { width: 44px; height: 44px; font-size: 18px; }
 .o-person--lg b { font-size: 17px; font-weight: 600; }
 .o-person--lg small { font-size: 13px; }
-.o-claim, .o-stage { display: flex; flex-direction: column; gap: 3px; }
-.o-claim b, .o-stage b { font-size: 13px; font-weight: 500; }
-.o-claim small, .o-stage small { color: var(--muted); font-size: 12px; }
 .o-when { color: var(--muted); font-size: 13px; }
 
 /* ------------------------------------------------------------ file view -- */
@@ -1066,7 +1093,11 @@ img { display: block; max-width: 100%; }
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
   color: #fff;
 }
-/* The dim, flat and opaque. Nothing from the screen below reads through. */
+/* The dim: flat and opaque. Nothing from the screen below reads through.
+   The screen behind is not rendered at all while the dialog is up — do not
+   reach for the `hidden` attribute to do this, because these layers carry
+   `display: flex`, which silently overrides it and leaves the old content
+   ghosting underneath. */
 .ios--dimmed { background: #585858; }
 
 .ios__statusbar {
@@ -1402,6 +1433,7 @@ img { display: block; max-width: 100%; }
 /* The wordmark stands on its own: a government service, not an app brand. */
 .topbar__brand {
   flex: 1;
+  display: flex; align-items: center; gap: 10px;
   color: var(--ink-strong);
   font-size: 15px; font-weight: 700; letter-spacing: .06em;
 }

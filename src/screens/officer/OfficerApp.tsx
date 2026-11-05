@@ -21,7 +21,7 @@ export function OfficerApp() {
     <div className="o-app">
       <nav className="rail" aria-label={t("agencyShort")}>
         <span className="brand" aria-hidden="true">
-          N
+          <img src={`${import.meta.env.BASE_URL}brand/mark.svg`} alt="" />
         </span>
         <div className="rail__nav">
           <button type="button" className="active" aria-label={t("o.title")}>
