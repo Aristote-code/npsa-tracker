@@ -1510,10 +1510,18 @@ img { display: block; max-width: 100%; }
 
 /* ------------------------------------------------- language control ----- */
 
-/* 48px targets: the control that most needs to be hittable by someone on an
-   old handset was the smallest thing in the app. */
-.topbar { min-height: 60px; padding: 5px 16px; }
-.lang button { min-width: 48px; height: 48px; border-radius: 9px; font-size: 13px; }
+/* 48dp applies to the touch target, not to the drawn box. A 48px square
+   around a two-letter label filled the header; the pill stays compact and
+   the target is extended past it. */
+.topbar { min-height: 60px; padding: 6px 16px; }
+.lang { padding: 3px; border-radius: 10px; }
+.lang button {
+  position: relative;
+  min-width: 46px; height: 34px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+.lang button::after { content: ""; position: absolute; inset: -7px -1px; }
 
 /* Inner screens: current language only, the rest behind a sheet. */
 .lang-compact {
@@ -1544,3 +1552,23 @@ img { display: block; max-width: 100%; }
   background: var(--blue-soft);
   font-weight: 600;
 }
+
+/* ------------------------------------- touch targets, citizen screens --- */
+
+/* Same rule as the language pills: the drawn control stays the size the
+   layout wants, the target underneath it reaches 48dp. Swept across the
+   citizen screens rather than just the header, which is where the first
+   pass stopped. */
+/* .shot__zoom is already absolutely positioned inside the photo — giving it
+   position:relative here knocked it out of its corner. */
+.ref-copy { position: relative; }
+.ref-copy::after, .shot__zoom::after { content: ""; position: absolute; inset: -8px 0; }
+
+.sheet header button { width: 48px; height: 48px; margin-right: -10px; }
+.quiet-link, .linkish { min-height: 48px; }
+.lang-list button { min-height: 56px; }
+
+/* Primary actions on the citizen screens run taller than AlignUI's 40px
+   medium. These are the screens read at arm's length on an old handset by
+   the least confident user in the brief; the officer desktop keeps 40. */
+.phone .fancy-button--medium { height: 48px; }
