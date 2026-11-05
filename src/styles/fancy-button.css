@@ -1,0 +1,60 @@
+.fancy-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  gap: 12px;
+  padding-inline: 14px;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  font-family: "Certia", Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -.084px;
+  white-space: nowrap;
+  outline: none;
+  transition: background-color .2s ease-out, color .2s ease-out, box-shadow .2s ease-out;
+}
+.fancy-button--medium { height: 40px; }
+.fancy-button--small { height: 36px; padding-inline: 12px; border-radius: 8px; }
+.fancy-button--xsmall { height: 32px; padding-inline: 10px; border-radius: 8px; }
+.fancy-button__icon { position: relative; z-index: 3; width: 20px; height: 20px; margin-inline: -4px; display: grid; flex: none; place-items: center; }
+.fancy-button--neutral { background: #171717; box-shadow: 0 1px 2px rgba(27, 28, 29, .48), 0 0 0 1px #242628; }
+.fancy-button--primary { background: #335cff; box-shadow: 0 1px 2px rgba(14, 18, 27, .24), 0 0 0 1px #335cff; }
+.fancy-button--destructive { background: #fb3748; box-shadow: 0 1px 2px rgba(14, 18, 27, .24), 0 0 0 1px #fb3748; }
+.fancy-button--success { background: #1fc16b; box-shadow: 0 1px 2px rgba(14, 18, 27, .24), 0 0 0 1px #1fc16b; }
+.fancy-button--filled::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .12), transparent);
+  pointer-events: none;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+.fancy-button--filled::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, #fff, transparent);
+  opacity: .16;
+  pointer-events: none;
+  transition: opacity .2s ease-out;
+}
+.fancy-button--basic { color: #5c5c5c; background: #fff; box-shadow: 0 1px 3px rgba(14,18,27,.12), 0 0 0 1px #ebebeb; }
+.fancy-button:hover::after { opacity: .24; }
+.fancy-button--basic:hover { color: #171717; background: #f7f7f7; box-shadow: none; }
+.fancy-button:focus-visible { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(55, 93, 251, .35); }
+.fancy-button:disabled { color: #d1d1d1; background: #f7f7f7; box-shadow: none; pointer-events: none; }
+.fancy-button:disabled::before, .fancy-button:disabled::after { display: none; }
+
