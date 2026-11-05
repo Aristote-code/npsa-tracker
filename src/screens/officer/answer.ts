@@ -10,7 +10,7 @@ import type { Application } from "@/types";
  * not have to read a table and synthesise an answer while someone waits.
  */
 export function citizenAnswer(application: Application, i18n: Translate): string {
-  const { t, d, time } = i18n;
+  const { t, d } = i18n;
 
   const index = application.stages.findIndex(
     (stage) => stage.state === "current" || stage.state === "paused",
@@ -36,6 +36,9 @@ export function citizenAnswer(application: Application, i18n: Translate): string
     parts.push(`${t("nothingToDo")}.`);
   }
 
-  parts.push(`${t("asOf", { time: time(application.updatedAt) })}.`);
+  // The "as of" time is carried by the panel's header band, not by the
+  // sentence: what is displayed and what the Copy button puts on the
+  // clipboard have to be the same string, or this panel is lying about
+  // being what the citizen sees.
   return parts.join(" ");
 }

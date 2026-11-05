@@ -40,7 +40,7 @@ const en = {
 
   // --------------------------------------------------------------- file --
   "o.answer": "What the citizen sees",
-  "o.answerHint": "Read this out, or copy it into a call note.",
+  "o.answerHint": "Read this out, or copy it into a call note",
   "o.copyAnswer": "Copy answer",
   "o.answerCopied": "Copied",
   "o.citizenPhone": "Phone",
@@ -162,7 +162,7 @@ const rw: OfficerDict = {
   "o.permissionDenied": "Uwakira abantu ntashobora guhindura imimerere. Saba umukozi usuzuma.",
 
   "o.answer": "Ibyo umuturage abona",
-  "o.answerHint": "Musomere ibi, cyangwa ubifate kopi.",
+  "o.answerHint": "Musomere ibi, cyangwa ubifate kopi",
   "o.copyAnswer": "Fata kopi y'igisubizo",
   "o.answerCopied": "Byafashwe",
   "o.citizenPhone": "Telefone",
@@ -280,7 +280,7 @@ const fr: OfficerDict = {
   "o.permissionDenied": "L'accueil ne peut pas modifier un statut. Demandez à un agent instructeur.",
 
   "o.answer": "Ce que voit le citoyen",
-  "o.answerHint": "Lisez ceci à voix haute, ou copiez-le.",
+  "o.answerHint": "Lisez ceci à voix haute, ou copiez-le",
   "o.copyAnswer": "Copier la réponse",
   "o.answerCopied": "Copié",
   "o.citizenPhone": "Téléphone",

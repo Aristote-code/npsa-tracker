@@ -6,6 +6,7 @@ import {
   Copy01Icon,
   File01Icon,
   Image01Icon,
+  InformationCircleIcon,
   LockPasswordIcon,
   Tick02Icon,
   UserGroupIcon,
@@ -113,17 +114,33 @@ export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
       {/* Aline's job is to give an answer in seconds, not to read a table and
           assemble one. This is the citizen's own wording, ready to read out. */}
       <section className="o-answer">
-        <div className="o-answer__head">
-          <strong>{t("o.answer")}</strong>
-          <span>{t("o.answerHint")}</span>
+        <div className="o-answer__band">
+          <span className="o-answer__title">
+            <Icon icon={InformationCircleIcon} size={18} strokeWidth={1.8} />
+            {t("o.answer")}
+          </span>
+          <span className="o-answer__meta">
+            {t("asOf", { time: time(application.updatedAt) })}
+          </span>
         </div>
-        <p lang={application.citizenLocale === "rw" ? undefined : application.citizenLocale}>
-          {answer}
-        </p>
-        <button type="button" className="o-copy" onClick={copyAnswer} data-copied={copied}>
-          <Icon icon={copied ? Tick02Icon : Copy01Icon} size={14} strokeWidth={2} />
-          {copied ? t("o.answerCopied") : t("o.copyAnswer")}
-        </button>
+
+        <div className="o-answer__body">
+          <p className="o-answer__intro">{t("o.answerHint")}</p>
+
+          {/* The sentence sits in its own card because it is the discrete
+              thing Aline acts on, not because the panel needed a box. */}
+          <div className="o-answer__item">
+            <p lang={application.citizenLocale === "rw" ? undefined : application.citizenLocale}>
+              {answer}
+            </p>
+            <FancyButton.Root variant="primary" size="medium" onClick={copyAnswer}>
+              <FancyButton.Icon as="span">
+                <Icon icon={copied ? Tick02Icon : Copy01Icon} size={16} strokeWidth={2} />
+              </FancyButton.Icon>
+              {copied ? t("o.answerCopied") : t("o.copyAnswer")}
+            </FancyButton.Root>
+          </div>
+        </div>
       </section>
 
       <div className="o-cols">

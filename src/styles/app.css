@@ -888,29 +888,38 @@ img { display: block; max-width: 100%; }
 .o-assisted p { margin: 2px 0 0; color: #4f5490; font-size: 12px; }
 .o-assisted button { color: var(--blue); font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
+/* "What the citizen sees" — anatomy taken from the reference alert: a tinted
+   band carrying the title and the one countable fact, an intro line, then the
+   item itself in its own bordered card with the action right-aligned. */
 .o-answer {
-  padding: 18px 20px;
-  display: flex; flex-direction: column; gap: 10px;
+  overflow: hidden;
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--blue);
+  border: 1px solid #d7e0ff;
   border-radius: 12px;
 }
-.o-answer__head { display: flex; align-items: baseline; gap: 10px; }
-.o-answer__head strong { color: var(--ink-strong); font-size: 13px; font-weight: 600; }
-.o-answer__head span { color: var(--muted-soft); font-size: 12px; }
-.o-answer p { margin: 0; color: var(--ink); font-size: 17px; line-height: 26px; }
-.o-copy {
-  align-self: flex-start;
-  min-height: 32px; padding: 0 11px;
-  display: inline-flex; align-items: center; gap: 7px;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  font-size: 12px; font-weight: 500;
+.o-answer__band {
+  height: 56px;
+  padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: #f0f3ff;
+  border-bottom: 1px solid #d7e0ff;
 }
-.o-copy:hover { color: var(--ink-strong); background: #fafafa; }
-.o-copy[data-copied="true"] { color: var(--green-ink); border-color: #bfe8d2; background: var(--green-soft); }
+.o-answer__title {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--blue);
+  font-size: 15px; font-weight: 600;
+}
+.o-answer__meta { color: #6478c4; font-size: 14px; white-space: nowrap; }
+.o-answer__body { padding: 20px; }
+.o-answer__intro { margin: 0 0 16px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.o-answer__item {
+  padding: 20px;
+  display: flex; align-items: center; gap: 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.o-answer__item p { margin: 0; min-width: 0; flex: 1; color: #1b1e22; font-size: 17px; line-height: 1.5; }
+.o-answer__item .fancy-button { flex: none; }
 
 .o-cols { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
 .o-col { display: flex; flex-direction: column; gap: 20px; }
