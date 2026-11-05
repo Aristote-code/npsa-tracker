@@ -78,6 +78,22 @@ export function Replace({ application, onBack, onReceived }: ReplaceProps) {
     }, 1600);
   };
 
+  // The saved state promises the photo "will be sent on its own as soon as
+  // you have network". A prototype that then waits for another tap is making
+  // a claim it does not keep, which is the one thing this design must not do.
+  React.useEffect(() => {
+    if (state !== "saved" || offline) return;
+    const timer = window.setTimeout(() => {
+      setInterrupted(false);
+      setState("sending");
+      window.setTimeout(() => {
+        setState("received");
+        window.setTimeout(onReceived, 650);
+      }, 1600);
+    }, 900);
+    return () => window.clearTimeout(timer);
+  }, [state, offline, onReceived]);
+
   const order: UploadState[] = ["saved", "sending", "received"];
   const reached = (key: UploadState) => order.indexOf(key) <= order.indexOf(state);
   const showSendStates = state === "saved" || state === "sending" || state === "received";

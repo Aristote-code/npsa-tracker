@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { applications } from "@/data";
 import { Assisted } from "@/screens/citizen/Assisted";
 import { Issue } from "@/screens/citizen/Issue";
 import { Lookup } from "@/screens/citizen/Lookup";
@@ -9,6 +8,7 @@ import { Received } from "@/screens/citizen/Received";
 import { Replace } from "@/screens/citizen/Replace";
 import { Status } from "@/screens/citizen/Status";
 import { Verify } from "@/screens/citizen/Verify";
+import { useApplication, useStore } from "@/store";
 import type { Application } from "@/types";
 
 type Step =
@@ -21,58 +21,35 @@ type Step =
   | "replace"
   | "received";
 
-/**
- * Once the replacement is on its way the file goes back to the Records Office
- * for a fresh look. It does not skip ahead, and no new completion date is
- * promised until a person has actually opened the photo.
- */
-function afterReplacement(application: Application): Application {
-  return {
-    ...application,
-    status: "in-review",
-    request: undefined,
-    expectedBy: undefined,
-    updatedAt: "2026-11-05T11:18:00",
-    stages: application.stages.map((stage, index) =>
-      index === 1 ? { ...stage, state: "current", date: "2026-11-05" } : stage,
-    ),
-    documents: application.documents.map((document) =>
-      document.state === "rejected"
-        ? { ...document, state: "replaced", replacedOn: "2026-11-05" }
-        : document,
-    ),
-    history: [
-      ...application.history,
-      {
-        id: "h-response",
-        labelKey: "h.responded",
-        actor: application.citizenName,
-        at: "2026-11-05T11:18:00",
-      },
-    ],
-  };
-}
-
 export function CitizenApp() {
+  const { applications, dispatch } = useStore();
   const [step, setStep] = React.useState<Step>("lookup");
-  const [application, setApplication] = React.useState<Application | null>(null);
+  /* The id, not the record: the officer may change this file while the
+     citizen has it open, and the citizen must see that, not a snapshot. */
+  const [currentId, setCurrentId] = React.useState<string | null>(null);
   const [verified, setVerified] = React.useState(false);
 
+  const application = useApplication(currentId);
+
   const open = (next: Application) => {
-    setApplication(next);
+    setCurrentId(next.id);
     setStep("status");
   };
 
+  // Screens that do not need a file come first, so the entry screen's own
+  // escape hatch is reachable before anything has been looked up.
+  if (step === "assisted") {
+    return <Assisted onBack={() => setStep(currentId ? "status" : "lookup")} />;
+  }
+
   if (step === "receipt") {
-    // The receipt is reached from the submission flow in real life, and from
-    // the confirmation SMS afterwards; the prototype links to it directly.
     const submitted = application ?? applications[0];
     return (
       <Receipt
         application={submitted}
         onBack={() => setStep("lookup")}
         onTrack={() => {
-          setApplication(submitted);
+          setCurrentId(submitted.id);
           setStep("status");
         }}
       />
@@ -87,10 +64,6 @@ export function CitizenApp() {
         onShowReceipt={() => setStep("receipt")}
       />
     );
-  }
-
-  if (step === "assisted") {
-    return <Assisted onBack={() => setStep(application ? "status" : "lookup")} />;
   }
 
   if (step === "verify") {
@@ -122,7 +95,11 @@ export function CitizenApp() {
         application={application}
         onBack={() => setStep("issue")}
         onReceived={() => {
-          setApplication(afterReplacement(application));
+          dispatch({
+            type: "citizen/replace-document",
+            id: application.id,
+            actor: application.citizenName,
+          });
           setStep("received");
         }}
       />
@@ -138,7 +115,7 @@ export function CitizenApp() {
       application={application}
       verified={verified}
       onBack={() => {
-        setApplication(null);
+        setCurrentId(null);
         setVerified(false);
         setStep("lookup");
       }}

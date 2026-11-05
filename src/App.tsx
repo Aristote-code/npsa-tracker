@@ -4,6 +4,7 @@ import { createTranslate, I18nContext, type Locale } from "@/i18n";
 import { CitizenApp } from "@/screens/citizen/CitizenApp";
 import { OfficerApp } from "@/screens/officer/OfficerApp";
 import { FeaturePhone } from "@/screens/phone/FeaturePhone";
+import { StoreProvider } from "@/store";
 
 type View = "citizen" | "officer" | "phone";
 
@@ -41,6 +42,7 @@ export function App() {
 
   return (
     <I18nContext.Provider value={i18n}>
+      <StoreProvider>
       <div className="proto" lang={locale}>
         {/* Prototype chrome — the three audiences the brief asks for, side by
             side. It is not part of any of the three products. */}
@@ -69,6 +71,7 @@ export function App() {
           {view === "phone" && <FeaturePhone />}
         </main>
       </div>
+      </StoreProvider>
     </I18nContext.Provider>
   );
 }

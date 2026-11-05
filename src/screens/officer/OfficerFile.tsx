@@ -15,10 +15,12 @@ import { Icon } from "@/components/Icon";
 import { SidePanel } from "@/components/SidePanel";
 import { StatusPill } from "@/components/StatusPill";
 import * as FancyButton from "@/components/ui/fancy-button";
-import { createTranslate, useI18n } from "@/i18n";
+import { signedInOfficer } from "@/data";
+import { createTranslate, useI18n, type Locale } from "@/i18n";
 import { formatReference } from "@/reference";
 import type { StringKey } from "@/i18n/strings";
 import { citizenAnswer } from "@/screens/officer/answer";
+import { useStore } from "@/store";
 import type { Application, OfficerRole } from "@/types";
 
 const REASON_KEYS: StringKey[] = [
@@ -39,6 +41,7 @@ type OfficerFileProps = {
 
 export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
   const i18n = useI18n();
+  const { dispatch } = useStore();
   const { t, d, time, since } = i18n;
 
   const [panel, setPanel] = React.useState<Panel>("none");
@@ -221,7 +224,14 @@ export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
             </FancyButton.Root>
           )}
 
-          <FancyButton.Root variant="basic" size="medium" onClick={() => setAssisted(true)}>
+          <FancyButton.Root
+            variant="basic"
+            size="medium"
+            onClick={() => {
+              setAssisted(true);
+              dispatch({ type: "officer/assisted", id: application.id, actor: signedInOfficer.name });
+            }}
+          >
             <FancyButton.Icon as="span">
               <Icon icon={UserGroupIcon} size={18} />
             </FancyButton.Icon>
@@ -242,21 +252,51 @@ export function OfficerFile({ application, role, onBack }: OfficerFileProps) {
         application={application}
         canChange={canChange}
         onClose={() => setPanel("none")}
-        onSaved={(stage) => announce(t("h.stageChanged", { stage }))}
+        onSaved={(labelKey) => {
+          dispatch({
+            type: "officer/move-stage",
+            id: application.id,
+            labelKey,
+            actor: signedInOfficer.name,
+          });
+          announce(t("h.stageChanged", { stage: t(labelKey) }));
+        }}
       />
 
       <RequestPanel
         open={panel === "request"}
         application={application}
         onClose={() => setPanel("none")}
-        onSent={() => announce(t("o.request.sent", { name: application.citizenName }))}
+        onSent={(request) => {
+          dispatch({
+            type: "officer/request-document",
+            id: application.id,
+            request: { ...request, officer: signedInOfficer },
+            actor: signedInOfficer.name,
+          });
+          announce(t("o.request.sent", { name: application.citizenName }));
+        }}
       />
 
       <ResponsePanel
         open={panel === "response"}
         application={application}
         onClose={() => setPanel("none")}
-        onDecided={(message) => announce(message)}
+        onDecided={(decision) => {
+          if (decision.accepted) {
+            dispatch({ type: "officer/accept", id: application.id, actor: signedInOfficer.name });
+            announce(t("o.response.accept"));
+          } else {
+            dispatch({
+              type: "officer/reject",
+              id: application.id,
+              reasonKeys: decision.reasonKeys,
+              respondBy: decision.respondBy,
+              actor: signedInOfficer.name,
+            });
+            announce(t("o.response.reject"));
+          }
+        }}
       />
 
       {toast && (
@@ -282,7 +322,7 @@ function StatusPanel({
   application: Application;
   canChange: boolean;
   onClose: () => void;
-  onSaved: (stage: string) => void;
+  onSaved: (labelKey: StringKey) => void;
 }) {
   const { t } = useI18n();
   const [target, setTarget] = React.useState(application.stages[2].labelKey);
@@ -297,7 +337,7 @@ function StatusPanel({
           variant="primary"
           size="medium"
           disabled={!canChange}
-          onClick={() => onSaved(t(target))}
+          onClick={() => onSaved(target)}
         >
           {t("o.status.save")}
         </FancyButton.Root>
@@ -344,7 +384,12 @@ function RequestPanel({
   open: boolean;
   application: Application;
   onClose: () => void;
-  onSent: () => void;
+  onSent: (request: {
+    documentId: string;
+    reasonKeys: StringKey[];
+    note?: { text: string; locale: Locale };
+    respondBy: string;
+  }) => void;
 }) {
   const { t, d, languageName, locale } = useI18n();
   const [documentId, setDocumentId] = React.useState(application.documents[0].id);
@@ -376,7 +421,14 @@ function RequestPanel({
           variant="primary"
           size="medium"
           disabled={reasons.length === 0}
-          onClick={onSent}
+          onClick={() =>
+            onSent({
+              documentId,
+              reasonKeys: reasons,
+              note: note.trim() ? { text: note.trim(), locale } : undefined,
+              respondBy: due,
+            })
+          }
         >
           {t("o.request.send")}
         </FancyButton.Root>
@@ -475,11 +527,21 @@ function ResponsePanel({
   open: boolean;
   application: Application;
   onClose: () => void;
-  onDecided: (message: string) => void;
+  onDecided: (
+    decision:
+      | { accepted: true }
+      | { accepted: false; reasonKeys: StringKey[]; respondBy: string },
+  ) => void;
 }) {
   const { t, d } = useI18n();
+  const [reasons, setReasons] = React.useState<StringKey[]>([]);
   const response = application.response;
   const document = application.documents.find((item) => item.id === response?.documentId);
+
+  const toggle = (key: StringKey) =>
+    setReasons((current) =>
+      current.includes(key) ? current.filter((item) => item !== key) : [...current, key],
+    );
 
   return (
     <SidePanel
@@ -491,14 +553,19 @@ function ResponsePanel({
           <FancyButton.Root
             variant="success"
             size="medium"
-            onClick={() => onDecided(t("o.response.accept"))}
+            onClick={() => onDecided({ accepted: true })}
           >
             {t("o.response.accept")}
           </FancyButton.Root>
+          {/* Sending it back needs a NEW reason: repeating the old wording is
+              what sends a file round the building twice. */}
           <FancyButton.Root
             variant="basic"
             size="medium"
-            onClick={() => onDecided(t("o.response.reject"))}
+            disabled={reasons.length === 0}
+            onClick={() =>
+              onDecided({ accepted: false, reasonKeys: reasons, respondBy: "2026-11-25" })
+            }
           >
             {t("o.response.reject")}
           </FancyButton.Root>
@@ -523,9 +590,19 @@ function ResponsePanel({
               {t("o.response.replaces", { date: d(response.replacesSentOn) })}
             </span>
           </div>
-          {/* The brief's "1 in 4 delayed" number is made of files that went
-              round twice on the same vague wording. */}
-          <p className="o-hint o-hint--warn">{t("o.response.rejectHint")}</p>
+
+          <div className="o-field">
+            <label>{t("o.request.why")}</label>
+            <p className="o-hint o-hint--warn">{t("o.response.rejectHint")}</p>
+            <div className="o-checks">
+              {REASON_KEYS.map((key) => (
+                <label className="o-check" key={key}>
+                  <input type="checkbox" checked={reasons.includes(key)} onChange={() => toggle(key)} />
+                  <span>{t(key)}</span>
+                </label>
+              ))}
+            </div>
+          </div>
         </>
       )}
     </SidePanel>

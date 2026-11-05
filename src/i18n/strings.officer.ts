@@ -112,7 +112,7 @@ const en = {
   "u.noteOs":
     "The dialog belongs to the handset, not to us. No colour, no logo, no layout — NPSA controls the text and nothing else, so the text is the whole design.",
   "u.noteKeypad":
-    "Jean Bosco's phone has a numeric keypad, so every step is a digit. No step ever asks him to type a word — which is why the file number has no letters in it at all.",
+    "The handset draws its own keyboard — on this iPhone, the symbol layout. What makes the service work on Jean Bosco's feature phone is not the keyboard but the menu: every step is a single digit, true on a keypad and a keyboard alike, which is why the file number has no letters in it at all.",
   "u.noteLang":
     "Language is the first question, asked once. The network remembers the choice against his number, so he never answers it again. The real MTN menu is English only; this is the gap worth closing.",
   "u.noteTimeout":
@@ -229,7 +229,7 @@ const rw: OfficerDict = {
   "u.noteOs":
     "Iki kiganiro ni icya telefone, si icyacu. Nta mabara, nta kirango, nta miterere — NPSA igenga inyandiko gusa, ni yo mpamvu inyandiko ari yo gishushanyo cyose.",
   "u.noteKeypad":
-    "Telefone ya Jean Bosco ifite buto z'imibare gusa, bityo buri ntambwe ni umubare. Nta ntambwe imusaba kwandika ijambo — ni na yo mpamvu nimero ya dosiye idafite inyuguti na nkeya.",
+    "Telefone ni yo yishushanyiriza buto zayo. Icyatuma serivisi ikora kuri telefone ya Jean Bosco si buto, ni menu: buri ntambwe ni umubare umwe, bikaba bimwe ku buto z'imibare no kuri clavier — ni na yo mpamvu nimero ya dosiye idafite inyuguti na nkeya.",
   "u.noteLang":
     "Ururimi ni cyo kibazo cya mbere, kibazwa rimwe gusa. Umurongo wibuka icyo yahisemo kuri nimero ye, ntabwo azongera kukibazwa. Menu nyayo ya MTN iri mu Cyongereza gusa; ni ho hari icyuho cyo kuziba.",
   "u.noteTimeout":
@@ -347,7 +347,7 @@ const fr: OfficerDict = {
   "u.noteOs":
     "La boîte de dialogue appartient au téléphone, pas à nous. Pas de couleur, pas de logo, pas de mise en page — la NPSA ne contrôle que le texte, et c'est donc le texte qui est tout le design.",
   "u.noteKeypad":
-    "Le téléphone de Jean Bosco n'a qu'un clavier numérique : chaque étape est un chiffre. Aucune étape ne lui demande d'écrire un mot — d'où un numéro de dossier sans la moindre lettre.",
+    "Le téléphone dessine son propre clavier — ici la disposition des symboles d'iOS. Ce qui fait tenir le service sur le téléphone de Jean Bosco n'est pas le clavier mais le menu : chaque étape est un seul chiffre, vrai sur un pavé numérique comme sur un clavier — d'où un numéro de dossier sans la moindre lettre.",
   "u.noteLang":
     "La langue est la première question, posée une seule fois. Le réseau retient le choix pour son numéro. Le vrai menu MTN est en anglais uniquement : c'est précisément l'écart à combler.",
   "u.noteTimeout":

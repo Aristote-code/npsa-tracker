@@ -31,9 +31,9 @@ export function citizenAnswer(application: Application, i18n: Translate): string
       `${t("replyBefore", { date: d(application.request.respondBy) })}.`,
     );
   } else if (application.expectedBy) {
-    parts.push(`${t("nothingToDo")} ${t("expectedBy")} ${d(application.expectedBy)}.`);
+    parts.push(`${t("nothingToDo")}. ${t("expectedBy")} ${d(application.expectedBy)}.`);
   } else {
-    parts.push(`${t("nothingToDo")}`);
+    parts.push(`${t("nothingToDo")}.`);
   }
 
   parts.push(`${t("asOf", { time: time(application.updatedAt) })}.`);

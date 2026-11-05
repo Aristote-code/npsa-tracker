@@ -3,9 +3,10 @@ import { Search01Icon } from "@hugeicons/core-free-icons";
 
 import { Icon } from "@/components/Icon";
 import { StatusPill } from "@/components/StatusPill";
-import { applications, searchApplications } from "@/data";
+import { searchApplications } from "@/data";
 import { useI18n } from "@/i18n";
 import { formatReference } from "@/reference";
+import { useStore } from "@/store";
 import type { Application, OfficerRole } from "@/types";
 
 type OfficerQueueProps = {
@@ -15,6 +16,7 @@ type OfficerQueueProps = {
 
 export function OfficerQueue({ role, onOpen }: OfficerQueueProps) {
   const { t, since } = useI18n();
+  const { applications } = useStore();
   const [query, setQuery] = React.useState("");
   const search = React.useRef<HTMLInputElement>(null);
 
@@ -29,7 +31,7 @@ export function OfficerQueue({ role, onOpen }: OfficerQueueProps) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-  const results = searchApplications(query);
+  const results = searchApplications(query, applications);
 
   const awaiting = applications.filter((item) => item.status === "action-needed").length;
 

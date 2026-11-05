@@ -159,18 +159,18 @@ export const applications: Application[] = [
 ];
 
 /** Spaces are display sugar, so "260 051 230" and "260051230" both match. */
-export function findByReference(input: string): Application | undefined {
+export function findByReference(input: string, list: Application[]): Application | undefined {
   const needle = normalizeReference(input);
-  return applications.find((application) => application.reference === needle);
+  return list.find((application) => application.reference === needle);
 }
 
 /** Officer search: reference, phone number or name — a caller rarely has all three. */
-export function searchApplications(query: string): Application[] {
+export function searchApplications(query: string, list: Application[]): Application[] {
   const needle = query.trim().toLowerCase();
-  if (!needle) return applications;
+  if (!needle) return list;
   const digits = needle.replace(/\D/g, "");
 
-  return applications.filter((application) => {
+  return list.filter((application) => {
     // The caller may read the number out with or without its spaces, and may
     // give a phone number or a name instead — all three have to land.
     if (digits.length >= 3 && application.reference.includes(digits)) return true;
@@ -178,10 +178,4 @@ export function searchApplications(query: string): Application[] {
     if (digits.length >= 3 && application.citizenPhone.replace(/\D/g, "").includes(digits)) return true;
     return false;
   });
-}
-
-export function findApplication(id: string): Application {
-  const match = applications.find((application) => application.id === id);
-  if (!match) throw new Error(`Unknown application: ${id}`);
-  return match;
 }

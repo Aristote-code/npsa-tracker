@@ -74,6 +74,9 @@ const en = {
   asOf: "Status as of {time}",
   lastUpdated: "Last updated",
   minutesAgo: "{n} minutes ago",
+  minuteAgo: "1 minute ago",
+  hourAgo: "1 hour ago",
+  dayAgo: "Yesterday",
   hoursAgo: "{n} hours ago",
   daysAgo: "{n} days ago",
 
@@ -263,6 +266,9 @@ const rw: typeof en = {
   asOf: "Aho bigeze ku isaha ya {time}",
   lastUpdated: "Ivugururwa riheruka",
   minutesAgo: "Hashize iminota {n}",
+  minuteAgo: "Hashize umunota 1",
+  hourAgo: "Hashize isaha 1",
+  dayAgo: "Ejo hashize",
   hoursAgo: "Hashize amasaha {n}",
   daysAgo: "Hashize iminsi {n}",
 
@@ -447,6 +453,9 @@ const fr: typeof en = {
   asOf: "Statut à {time}",
   lastUpdated: "Dernière mise à jour",
   minutesAgo: "Il y a {n} minutes",
+  minuteAgo: "Il y a 1 minute",
+  hourAgo: "Il y a 1 heure",
+  dayAgo: "Hier",
   hoursAgo: "Il y a {n} heures",
   daysAgo: "Il y a {n} jours",
 

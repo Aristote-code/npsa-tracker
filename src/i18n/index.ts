@@ -71,10 +71,11 @@ export function createTranslate(locale: Locale, setLocale: (next: Locale) => voi
 
   const since = (iso: string) => {
     const minutes = Math.max(1, Math.round((NOW.getTime() - new Date(iso).getTime()) / 60000));
-    if (minutes < 60) return t("minutesAgo", { n: minutes });
+    if (minutes < 60) return minutes === 1 ? t("minuteAgo") : t("minutesAgo", { n: minutes });
     const hours = Math.round(minutes / 60);
-    if (hours < 24) return t("hoursAgo", { n: hours });
-    return t("daysAgo", { n: Math.round(hours / 24) });
+    if (hours < 24) return hours === 1 ? t("hourAgo") : t("hoursAgo", { n: hours });
+    const days = Math.round(hours / 24);
+    return days === 1 ? t("dayAgo") : t("daysAgo", { n: days });
   };
 
   const languageName = (target: Locale) =>

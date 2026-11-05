@@ -29,7 +29,12 @@ const SCREEN_KEY: Record<Screen, StringKey> = {
 };
 
 const LIMIT = 182;
-const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"];
+
+/** The iOS symbol layout, as the reference screenshot shows it. */
+const KEY_ROWS = [
+  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+  ["-", "/", ":", ";", "(", ")", "$", "&", "@", "”"],
+];
 
 /**
  * The fourth deliverable, designed rather than described.
@@ -40,18 +45,19 @@ const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"];
  * problem, which is why the assisted path at any NPSA counter is a designed
  * route rather than a footnote.
  *
- * The dialog below is drawn to match a real MTN Rwanda USSD session: it is an
- * operating-system modal over whatever the phone was doing, with centre-set
- * white system text and "N)" numbering. None of our design system appears in
- * it, because none of it would survive the channel — we control the text and
- * nothing else.
+ * The dialog matches a real MTN Rwanda session on iOS: the system dims the
+ * screen behind it to a mid grey, draws its own chrome, its own keyboard and
+ * its own type. None of our design system appears here, because none of it
+ * would survive the channel — we supply the text and nothing else, which is
+ * what makes the text the entire design.
  */
 export function FeaturePhone() {
-  const { t, locale, setLocale } = useI18n();
+  const { t, setLocale } = useI18n();
   const [screen, setScreen] = React.useState<Screen>("lang");
   const [entry, setEntry] = React.useState("");
 
   const body = t(SCREEN_KEY[screen]);
+  const live = screen !== "timeout";
 
   // Counted across all three dictionaries, because a screen that fits in
   // English and overflows in Kinyarwanda does not fit.
@@ -124,77 +130,93 @@ export function FeaturePhone() {
           <h2>{t("u.pullTitle")}</h2>
           <p className="u-dial mono">{t("u.dial", { code: "*123#" })}</p>
 
-          <div className="handset">
-            <div className="handset__screen">
-              {/* The status bar belongs to the phone and stays crisp above the
-                  dialog, exactly as it does on a real handset. */}
-              <div className="handset__statusbar" aria-hidden="true">
-                <span>MTN RW</span>
-                <span>11:13</span>
+          <div className="iphone">
+            <div className={`ios${live ? " ios--dimmed" : ""}`}>
+              <div className="ios__statusbar">
+                <span>11:43</span>
+                <span className="ios__signal">
+                  ılıl 3G <b>52</b>
+                </span>
               </div>
 
-              <div className="handset__stage">
-                {/* Whatever the phone was showing. While the dialog is up the
-                    handset stops drawing it entirely — leaving it underneath
-                    at low opacity is what made the menu look corrupted. */}
-                <div className="handset__idle" aria-hidden="true" hidden={screen !== "timeout"}>
-                  <div className="handset__clock">11:13</div>
-                  <div className="handset__softkeys">
-                    <span>Menu</span>
-                    <span>Names</span>
+              {live ? (
+                <>
+                  <div className="ios__chrome">
+                    <button type="button" className="ios__pill" onClick={() => setScreen("timeout")}>
+                      Cancel
+                    </button>
+                    <span className="ios__title">Reply</span>
+                    <button type="button" className="ios__pill" onClick={reply}>
+                      Reply
+                    </button>
                   </div>
-                </div>
 
-                {screen !== "timeout" ? (
-                  <div className="ussd" role="dialog" aria-label="USSD">
-                    <div className="ussd__chrome">
+                  <pre className="ios__menu">{body}</pre>
+
+                  <div className="ios__field">
+                    <i className="ios__caret" />
+                    <span>{entry}</span>
+                  </div>
+                  <div className="ios__count">
+                    {t("u.charsLeft", { n: Math.max(0, LIMIT - entry.length) })}
+                  </div>
+
+                  {/* The handset's own keyboard. */}
+                  <div className="ios__keyboard">
+                    {KEY_ROWS.map((row, index) => (
+                      <div className="ios__krow" key={index}>
+                        {row.map((key) => (
+                          <button key={key} type="button" onClick={() => press(key)}>
+                            {key}
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+                    <div className="ios__krow">
+                      <button type="button" className="ios__kwide">
+                        #+=
+                      </button>
+                      {[".", ",", "?", "!", "’"].map((key) => (
+                        <button key={key} type="button" onClick={() => press(key)}>
+                          {key}
+                        </button>
+                      ))}
                       <button
                         type="button"
-                        className="ussd__pill"
-                        onClick={() => setScreen("timeout")}
+                        className="ios__kwide"
+                        onClick={() => setEntry((value) => value.slice(0, -1))}
                       >
-                        {t("u.cancel")}
-                      </button>
-                      <span className="ussd__title">{t("u.send")}</span>
-                      <button type="button" className="ussd__pill" onClick={reply}>
-                        {t("u.send")}
+                        ⌫
                       </button>
                     </div>
-
-                    <pre className="ussd__body">{body}</pre>
-
-                    <div className="ussd__field">{entry}</div>
-                    <div className="ussd__count">
-                      {t("u.charsLeft", { n: Math.max(0, LIMIT - entry.length) })}
+                    <div className="ios__krow">
+                      <button type="button" className="ios__kabc">
+                        ABC
+                      </button>
+                      <button type="button" className="ios__kspace" onClick={() => press(" ")}>
+                        <em>EN FR</em>
+                      </button>
+                      <button type="button" className="ios__kreturn" onClick={reply}>
+                        ⏎
+                      </button>
+                    </div>
+                    <div className="ios__ktray">
+                      <span>☺</span>
+                      <span>🎤</span>
                     </div>
                   </div>
-                ) : (
-                  <div className="ussd ussd--ended" role="dialog" aria-label="USSD">
-                    <pre className="ussd__body">{t("ussd.timeout")}</pre>
-                    <button type="button" className="ussd__pill ussd__pill--wide" onClick={restart}>
+                </>
+              ) : (
+                <div className="ios__home">
+                  <div className="ios__clock">11:43</div>
+                  <div className="ios__alert">
+                    <p>{t("ussd.timeout")}</p>
+                    <button type="button" onClick={restart}>
                       {t("u.reset")}
                     </button>
                   </div>
-                )}
-              </div>
-            </div>
-
-            {/* A feature phone's keypad: digits only, which is why every step
-                of the menu is a number. */}
-            <div className="keypad">
-              {KEYS.map((key) => (
-                <button key={key} type="button" onClick={() => press(key)} disabled={screen === "timeout"}>
-                  {key}
-                </button>
-              ))}
-            </div>
-            <div className="keypad__row">
-              <button type="button" onClick={() => setEntry("")} disabled={screen === "timeout"}>
-                Clear
-              </button>
-              <button type="button" onClick={reply} disabled={screen === "timeout"}>
-                {t("u.send")}
-              </button>
+                </div>
+              )}
             </div>
           </div>
 

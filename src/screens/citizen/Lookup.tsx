@@ -4,9 +4,10 @@ import { Alert02Icon } from "@hugeicons/core-free-icons";
 import { Icon } from "@/components/Icon";
 import { Page } from "@/components/Page";
 import * as FancyButton from "@/components/ui/fancy-button";
-import { applications, findByReference } from "@/data";
+import { findByReference } from "@/data";
 import { useI18n } from "@/i18n";
 import { checkReference, formatReference, normalizeReference, REFERENCE_LENGTH } from "@/reference";
+import { useStore } from "@/store";
 import type { Application } from "@/types";
 
 type LookupProps = {
@@ -19,6 +20,7 @@ type Problem = "incomplete" | "mistyped" | "notFound" | null;
 
 export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
   const { t } = useI18n();
+  const { applications } = useStore();
   const [value, setValue] = React.useState("");
   const [problem, setProblem] = React.useState<Problem>(null);
 
@@ -39,7 +41,7 @@ export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
       return;
     }
 
-    const match = findByReference(value);
+    const match = findByReference(value, applications);
     if (match) onFound(match);
     else setProblem("notFound");
   };

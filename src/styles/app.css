@@ -1044,115 +1044,144 @@ img { display: block; max-width: 100%; }
 .u-dial { margin: 0; color: var(--green-ink); font-size: 14px; font-weight: 600; }
 .u-limit { margin: 0; max-width: 42ch; color: var(--muted); font-size: 12px; line-height: 18px; }
 
-/* A feature phone. The USSD dialog is drawn by the handset over whatever was
-   already on screen — none of our design system reaches it. */
-.handset {
-  position: relative;
-  width: 300px;
-  padding: 14px;
-  display: flex; flex-direction: column; gap: 10px;
-  background: #22262c;
-  border-radius: 22px;
-  box-shadow: 0 16px 40px rgba(23, 26, 31, .22);
+/* An iPhone running a real USSD session.
+   Values sampled from reference/ussd-real-momo-rwanda*.webp: iOS dims the
+   screen behind the dialog to a mid grey, not to black, and renders the
+   chrome, the keyboard and the type itself. Our design system is absent on
+   purpose — none of it reaches this channel. */
+.iphone {
+  width: 340px;
+  padding: 10px;
+  background: #15181d;
+  border-radius: 42px;
+  box-shadow: 0 18px 44px rgba(23, 26, 31, .24);
 }
-.handset__screen {
+.ios {
   position: relative;
-  height: 330px;
+  height: 620px;
   display: flex; flex-direction: column;
   overflow: hidden;
+  border-radius: 33px;
   background: linear-gradient(170deg, #2f3a4a 0%, #1f2630 100%);
-  border-radius: 8px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  color: #fff;
 }
-/* The status bar is the phone's, not the dialog's: it sits above and stays
-   crisp, the way it does in the real handset screenshot. */
-.handset__statusbar {
-  position: relative; z-index: 2;
+/* The dim, flat and opaque. Nothing from the screen below reads through. */
+.ios--dimmed { background: #585858; }
+
+.ios__statusbar {
   flex: none;
-  padding: 9px 12px 7px;
-  display: flex; justify-content: space-between;
-  color: #cfd8e4; font-size: 10px;
+  height: 44px;
+  padding: 12px 22px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 14px; font-weight: 600;
 }
-.handset__stage { position: relative; min-height: 0; flex: 1; }
-.handset__idle { position: absolute; inset: 0; padding: 0 12px 10px; display: flex; flex-direction: column; }
-.handset__clock {
-  flex: 1;
-  display: grid; place-items: center;
-  color: #d7e2ef; font-size: 34px; font-weight: 300; letter-spacing: 1px;
-}
-.handset__softkeys {
-  display: flex; justify-content: space-between;
-  color: #9fb0c4; font-size: 10px;
+.ios__signal { display: flex; align-items: center; gap: 5px; font-size: 12px; letter-spacing: -.5px; }
+.ios__signal b {
+  padding: 1px 4px;
+  color: #000; background: #fff;
+  border-radius: 3px;
+  font-size: 9px; font-weight: 700;
 }
 
-.ussd {
-  position: absolute; inset: 0;
-  z-index: 1;
-  padding: 10px 12px 14px;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-  /* Near-opaque: the idle screen must not read through the menu text. */
-  background: rgba(24, 27, 32, .965);
-  border-radius: 8px;
-  /* Deliberately the system stack: this text is rendered by the phone. */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  color: #fff;
+.ios__chrome {
+  flex: none;
+  padding: 6px 14px 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
-.ussd__chrome { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.ussd__title { flex: 1; text-align: center; color: #fff; font-size: 13px; font-weight: 600; }
-.ussd__pill {
-  padding: 5px 12px;
+.ios__pill {
+  height: 44px;
+  padding: 0 20px;
   color: #fff;
-  background: rgba(255, 255, 255, .18);
-  border-radius: 999px;
-  font-size: 12px; font-weight: 500;
+  background: rgba(0, 0, 0, .25);
+  border-radius: 22px;
+  font-size: 19px; font-weight: 400;
 }
-.ussd__pill:hover { background: rgba(255, 255, 255, .28); }
-.ussd__pill--wide { align-self: center; margin-top: 14px; padding: 7px 18px; }
-.ussd__body {
+.ios__pill:hover { background: rgba(0, 0, 0, .35); }
+.ios__title { color: #fff; font-size: 19px; font-weight: 600; }
+
+/* Centre-set, exactly as the handset renders it. */
+.ios__menu {
   flex: 1;
-  margin: 18px 0 0;
-  /* Centre-set, exactly as the handset renders it. */
+  margin: 26px 0 0;
+  padding: 0 14px;
+  overflow: hidden;
   text-align: center;
   color: #fff;
   font-family: inherit;
-  font-size: 13px; line-height: 20px;
+  font-size: 17px; font-weight: 400; line-height: 1.5;
   white-space: pre-wrap; word-break: break-word;
 }
-.ussd__field {
-  min-height: 30px;
-  padding: 6px 10px;
-  display: flex; align-items: center;
+
+.ios__field {
+  flex: none;
+  height: 52px;
+  margin: 0 14px;
+  padding: 0 12px;
+  display: flex; align-items: center; gap: 1px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  font-size: 17px;
+}
+.ios__caret { width: 2px; height: 24px; background: #fff; }
+.ios__count {
+  flex: none;
+  padding: 10px 0 12px;
+  text-align: center;
+  color: rgba(255, 255, 255, .85);
+  font-size: 15px;
+}
+
+.ios__keyboard {
+  flex: none;
+  padding: 8px 3px 0;
+  display: flex; flex-direction: column; gap: 9px;
+  background: #252525;
+  border-radius: 10px 10px 0 0;
+}
+.ios__krow { display: flex; gap: 5px; padding: 0 3px; }
+.ios__krow button {
+  min-width: 0; flex: 1;
+  height: 40px;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, .7);
-  border-radius: 8px;
-  font-size: 13px; letter-spacing: 1px;
+  background: #484848;
+  border-radius: 5px;
+  font-size: 17px;
 }
-.ussd__count { margin-top: 6px; text-align: center; color: rgba(255, 255, 255, .62); font-size: 11px; }
-.ussd--ended { justify-content: center; }
-.ussd--ended .ussd__body { flex: none; margin: 0; }
+.ios__krow button:hover { background: #5a5a5a; }
+.ios__kwide { flex: 1.6 !important; font-size: 14px !important; }
+.ios__kabc { flex: 1.9 !important; font-size: 15px !important; }
+.ios__kspace { flex: 4 !important; position: relative; }
+.ios__kspace em { position: absolute; right: 10px; bottom: 6px; color: #9b9b9b; font-style: normal; font-size: 10px; }
+.ios__kreturn { flex: 1.9 !important; }
+.ios__ktray {
+  height: 44px;
+  padding: 0 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 19px;
+}
 
-.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.keypad button {
-  height: 32px;
-  color: #d8dce2;
-  background: #30353d;
-  border-radius: 7px;
-  font-size: 14px; font-weight: 500;
+.ios__home { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+.ios__clock { color: #d7e2ef; font-size: 44px; font-weight: 300; letter-spacing: 1px; }
+.ios__alert {
+  width: 240px;
+  padding: 18px 16px 0;
+  display: flex; flex-direction: column; align-items: center;
+  overflow: hidden;
+  background: rgba(58, 58, 58, .96);
+  border-radius: 14px;
+  text-align: center;
 }
-.keypad button:hover:not(:disabled) { background: #3b414a; }
-.keypad button:disabled { color: #585e67; }
-.keypad__row { display: flex; gap: 6px; }
-.keypad__row button {
-  flex: 1; height: 32px;
-  color: #22262c; background: #c3d6a8;
-  border-radius: 7px;
-  font-size: 12px; font-weight: 600;
+.ios__alert p { margin: 0 0 16px; color: #fff; font-size: 14px; line-height: 20px; white-space: pre-line; }
+.ios__alert button {
+  width: calc(100% + 32px);
+  height: 44px;
+  color: #3b82f7;
+  border-top: .5px solid rgba(255, 255, 255, .22);
+  font-size: 16px;
 }
-.keypad__row button:first-child { color: #d8dce2; background: #30353d; }
-.keypad__row button:disabled { opacity: .5; }
 
-.u-budget { width: 300px; display: flex; flex-direction: column; gap: 4px; color: var(--muted); font-size: 12px; }
+.u-budget { width: 340px; display: flex; flex-direction: column; gap: 4px; color: var(--muted); font-size: 12px; }
 .u-budget .is-over { color: var(--red); font-weight: 600; }
 .u-meter { height: 4px; margin-top: 2px; overflow: hidden; background: #e4e6e9; border-radius: 3px; }
 .u-meter i { display: block; height: 100%; background: var(--green); border-radius: 3px; }
