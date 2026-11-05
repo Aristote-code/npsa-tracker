@@ -47,19 +47,14 @@ export function Page({ compactTitle, onBack, footer, bare, children }: PageProps
             <Icon icon={ArrowLeft02Icon} size={22} />
           </button>
         ) : (
-          <div className="topbar__brand">
-            <span className="topbar__mark" aria-hidden="true">
-              N
-            </span>
-            <span className="topbar__name">
-              <b>{t("agencyShort")}</b>
-              <span>{t("agency")}</span>
-            </span>
-          </div>
+          <span className="topbar__brand">{t("agencyShort")}</span>
         )}
 
-        {compactTitle && (
-          <span className={`topbar__compact${scrolled ? " is-shown" : ""}`} aria-hidden="true">
+        {/* Either shown or absent. A half-faded title mid-scroll reads as a
+            rendering fault, which is the same mistake as a dialog that lets
+            the screen behind it show through. */}
+        {compactTitle && scrolled && (
+          <span className="topbar__compact" aria-hidden="true">
             {compactTitle}
           </span>
         )}

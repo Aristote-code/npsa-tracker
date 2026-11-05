@@ -115,10 +115,7 @@ export function FeaturePhone() {
   return (
     <div className="u-screen">
       <header className="u-head">
-        <div>
-          <h1>{t("u.title")}</h1>
-          <p>{t("u.sub")}</p>
-        </div>
+        <h1>{t("u.title")}</h1>
         <LanguageSwitcher />
       </header>
 
@@ -137,8 +134,10 @@ export function FeaturePhone() {
               </div>
 
               <div className="handset__stage">
-                {/* Whatever the phone was showing. The dialog covers it. */}
-                <div className="handset__idle" aria-hidden="true">
+                {/* Whatever the phone was showing. While the dialog is up the
+                    handset stops drawing it entirely — leaving it underneath
+                    at low opacity is what made the menu look corrupted. */}
+                <div className="handset__idle" aria-hidden="true" hidden={screen !== "timeout"}>
                   <div className="handset__clock">11:13</div>
                   <div className="handset__softkeys">
                     <span>Menu</span>

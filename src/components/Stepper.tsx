@@ -17,10 +17,11 @@ const DOT: Record<StageState, string> = {
  */
 export function Stepper({ stages }: { stages: Stage[] }) {
   const { t, d } = useI18n();
+  const nextUp = stages.findIndex((stage) => stage.state === "waiting");
 
   return (
     <ol className="steps" aria-label={t("progress")}>
-      {stages.map((stage) => (
+      {stages.map((stage, index) => (
           <li key={stage.labelKey} className={`step step--${stage.state}`}>
             <div className="step__rail" aria-hidden="true">
               <span className={DOT[stage.state]}>
@@ -42,12 +43,11 @@ export function Stepper({ stages }: { stages: Stage[] }) {
                 {stage.state === "current" &&
                   `${t("stageNow")}${stage.date ? ` · ${t("startedOn", { date: d(stage.date) })}` : ""}`}
                 {stage.state === "paused" && t("stagePaused")}
-                {stage.state === "waiting" &&
-                  (stage.typicalDays
-                    ? stage.typicalDays === 1
-                      ? t("usuallyTakesOne")
-                      : t("usuallyTakes", { days: stage.typicalDays })
-                    : t("stageWaiting"))}
+                {stage.state === "waiting" && index === nextUp && stage.typicalDays
+                  ? stage.typicalDays === 1
+                    ? t("usuallyTakesOne")
+                    : t("usuallyTakes", { days: stage.typicalDays })
+                  : null}
               </span>
             </div>
           </li>

@@ -1367,3 +1367,64 @@ img { display: block; max-width: 100%; }
   .phone { border: 0; box-shadow: none; height: auto; }
   .slip { border-color: #999; }
 }
+
+/* ===================================================== polish pass ====== */
+
+/* The wordmark stands on its own: a government service, not an app brand. */
+.topbar__brand {
+  flex: 1;
+  color: var(--ink-strong);
+  font-size: 15px; font-weight: 700; letter-spacing: .06em;
+}
+.topbar__compact { opacity: 1; transform: none; transition: none; }
+
+.lookup-title {
+  margin: 0;
+  color: var(--ink-strong);
+  font-size: 26px; font-weight: 600; line-height: 32px; letter-spacing: -.4px;
+}
+.input::placeholder { color: #b6b9bf; letter-spacing: .14em; }
+
+/* A text link, not a second button. */
+.quiet-link {
+  align-self: flex-start;
+  min-height: 44px;
+  display: inline-flex; align-items: center;
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #c9ccd1;
+}
+.quiet-link:hover { color: var(--ink-strong); }
+
+/* Colour only where it means something. */
+.pill--quiet { padding: 0; color: var(--muted); background: none; font-weight: 500; }
+
+/* Flat initials from the neutral ramp — a hue gradient said nothing. */
+.officer__avatar, .o-person > i, .rail__profile {
+  background-image: none;
+  background: #e9ebef;
+  color: #5c6069;
+  font-family: "Certia", Inter, sans-serif;
+  font-weight: 600;
+}
+.officer__avatar { font-size: 17px; }
+.o-person > i { font-size: 12px; }
+.rail__profile { background: #e9ebef; color: #5c6069; font-size: 13px; }
+
+/* A button is a button; it does not also need an underline. */
+.fancy-button, .fancy-button:hover { text-decoration: none; }
+
+.free-note { margin: 0; color: var(--muted-soft); font-size: 13px; line-height: 19px; }
+.hero__meta { display: block; color: var(--muted); }
+.officer__hours { color: var(--muted); font-size: 12px; }
+.todo--calm { display: block; }
+
+/* The file number is the service's signature: one number, set the same way
+   on every surface, with digits that line up column to column. */
+.mono, .number-card__value, .slip__number, .input--ref {
+  font-variant-numeric: tabular-nums;
+}
+
+.proto__tabs button { padding: 8px 14px; font-size: 13px; font-weight: 600; }

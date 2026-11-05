@@ -17,11 +17,10 @@ const en = {
 
   // ------------------------------------------------------------- lookup --
   lookupTitle: "Track your application",
-  lookupSub: "Enter the reference number from your receipt or from our SMS.",
   refLabel: "Reference number",
-  refHint: "Nine digits, like 260 051 230. It is on your receipt and in our SMS.",
-  refIncomplete: "Keep going — nine digits in all.",
-  refMistyped: "That number does not look right. Please check it before we look.",
+  refHint: "260 051 230",
+  refIncomplete: "Keep going — nine digits in all",
+  refMistyped: "That number does not look right — please check it",
   lookupAction: "Check status",
   noReference: "I do not have my reference number",
   notFoundTitle: "We could not find that reference",
@@ -69,11 +68,9 @@ const en = {
   "status.actionNeeded": "Action needed",
   "status.approved": "Approved",
 
-  whereItIs: "Where your application is now",
   nowWith: "Being checked by the {dept}",
   pausedWith: "Paused — waiting for your document",
   expectedBy: "Expected by",
-  expectedAfter: "We will give a new date once we have your document",
   asOf: "Status as of {time}",
   lastUpdated: "Last updated",
   minutesAgo: "{n} minutes ago",
@@ -81,12 +78,10 @@ const en = {
   daysAgo: "{n} days ago",
 
   whatToDo: "What you need to do",
-  nothingToDo: "Nothing for now.",
+  nothingToDo: "Nothing for now",
   nothingToDoSub:
     "We will send you an SMS when it is your turn. You do not need to come to the office.",
   actionTitle: "One document needs to be replaced",
-  actionSub: "Your application is paused until we receive it.",
-  actionLocked: "To see what is wrong and send it, we first check that it is you.",
   replyBefore: "Reply before {date}",
   seeWhatIsNeeded: "See what is needed",
 
@@ -117,8 +112,7 @@ const en = {
   officeHours: "Monday to Friday, 8:00 – 17:00",
 
   freeServiceTitle: "This service is free",
-  freeServiceBody:
-    "You never need to pay anyone to follow up on your application. Nobody from NPSA will ask you for money.",
+  freeServiceBody: "You never need to pay anyone to follow up an application",
 
   // ------------------------------------------------------------- verify --
   verifyTitle: "We check it is you",
@@ -215,11 +209,10 @@ const rw: typeof en = {
   cancel: "Hagarika",
 
   lookupTitle: "Kurikirana dosiye yawe",
-  lookupSub: "Andika nimero ya dosiye iri ku rupapuro wahawe cyangwa mu butumwa twakoherereje.",
   refLabel: "Nimero ya dosiye",
-  refHint: "Imibare 9, nka 260 051 230. Iri ku rupapuro wahawe no mu butumwa.",
-  refIncomplete: "Komeza — hagomba kuba imibare 9 yose.",
-  refMistyped: "Iyo mibare ntisa nk'iyo. Ongera uyirebe mbere y'uko dushakisha.",
+  refHint: "260 051 230",
+  refIncomplete: "Komeza — hagomba kuba imibare 9 yose",
+  refMistyped: "Iyo mibare ntisa nk'iyo — ongera uyirebe",
   lookupAction: "Reba aho igeze",
   noReference: "Nta nimero ya dosiye mfite",
   notFoundTitle: "Iyo nimero ntiyabonetse",
@@ -264,11 +257,9 @@ const rw: typeof en = {
   "status.actionNeeded": "Hari icyo ukeneye gukora",
   "status.approved": "Byemewe",
 
-  whereItIs: "Aho dosiye yawe igeze",
   nowWith: "Irimo gusuzumwa n'{dept}",
   pausedWith: "Irahagaze — bategereje inyandiko yawe",
   expectedBy: "Biteganyijwe mbere ya",
-  expectedAfter: "Tuzaguha itariki nshya nitumara kwakira inyandiko yawe",
   asOf: "Aho bigeze ku isaha ya {time}",
   lastUpdated: "Ivugururwa riheruka",
   minutesAgo: "Hashize iminota {n}",
@@ -276,12 +267,10 @@ const rw: typeof en = {
   daysAgo: "Hashize iminsi {n}",
 
   whatToDo: "Icyo ugomba gukora",
-  nothingToDo: "Nta kintu kuri ubu.",
+  nothingToDo: "Nta kintu kuri ubu",
   nothingToDoSub:
     "Tuzakwoherereza ubutumwa bugufi igihe bizaba bigeze. Ntugomba kuza ku biro.",
   actionTitle: "Hari inyandiko imwe igomba gusimburwa",
-  actionSub: "Dosiye yawe irahagaze kugeza tuyakiriye.",
-  actionLocked: "Kugira ngo urebe ikitagenda neza unayohereze, tubanza kwemeza ko ari wowe.",
   replyBefore: "Subiza mbere ya {date}",
   seeWhatIsNeeded: "Reba icyo bakeneye",
 
@@ -311,8 +300,7 @@ const rw: typeof en = {
   officeHours: "Kuwa mbere – Kuwa gatanu, 8:00 – 17:00",
 
   freeServiceTitle: "Iyi serivisi ni ubuntu",
-  freeServiceBody:
-    "Nta mpamvu yo kwishyura umuntu ngo agukurikiranire dosiye. Nta mukozi wa NPSA uzagusaba amafaranga.",
+  freeServiceBody: "Nta mpamvu yo kwishyura umuntu ngo agukurikiranire dosiye",
 
   verifyTitle: "Turebe ko ari wowe",
   verifyWhy:
@@ -405,11 +393,10 @@ const fr: typeof en = {
   cancel: "Annuler",
 
   lookupTitle: "Suivre votre demande",
-  lookupSub: "Entrez le numéro de dossier figurant sur votre reçu ou dans notre SMS.",
   refLabel: "Numéro de dossier",
-  refHint: "Neuf chiffres, comme 260 051 230. Il figure sur votre reçu et dans notre SMS.",
-  refIncomplete: "Continuez — neuf chiffres en tout.",
-  refMistyped: "Ce numéro ne semble pas correct. Vérifiez-le avant la recherche.",
+  refHint: "260 051 230",
+  refIncomplete: "Continuez — neuf chiffres en tout",
+  refMistyped: "Ce numéro ne semble pas correct — vérifiez-le",
   lookupAction: "Voir le statut",
   noReference: "Je n'ai pas mon numéro de dossier",
   notFoundTitle: "Ce numéro est introuvable",
@@ -454,11 +441,9 @@ const fr: typeof en = {
   "status.actionNeeded": "Action requise",
   "status.approved": "Approuvée",
 
-  whereItIs: "Où en est votre demande",
   nowWith: "En cours d'examen au {dept}",
   pausedWith: "En pause — votre document est attendu",
   expectedBy: "Prévu avant le",
-  expectedAfter: "Nous donnerons une nouvelle date dès réception de votre document",
   asOf: "Statut à {time}",
   lastUpdated: "Dernière mise à jour",
   minutesAgo: "Il y a {n} minutes",
@@ -466,12 +451,10 @@ const fr: typeof en = {
   daysAgo: "Il y a {n} jours",
 
   whatToDo: "Ce que vous devez faire",
-  nothingToDo: "Rien pour le moment.",
+  nothingToDo: "Rien pour le moment",
   nothingToDoSub:
     "Nous vous enverrons un SMS le moment venu. Vous n'avez pas besoin de venir au bureau.",
   actionTitle: "Un document doit être remplacé",
-  actionSub: "Votre demande est en pause jusqu'à sa réception.",
-  actionLocked: "Pour voir ce qui ne va pas et l'envoyer, nous vérifions d'abord que c'est bien vous.",
   replyBefore: "Répondez avant le {date}",
   seeWhatIsNeeded: "Voir ce qui est demandé",
 
@@ -501,8 +484,7 @@ const fr: typeof en = {
   officeHours: "Lundi à vendredi, 8h00 – 17h00",
 
   freeServiceTitle: "Ce service est gratuit",
-  freeServiceBody:
-    "Vous n'avez jamais besoin de payer quelqu'un pour suivre votre demande. Aucun agent de la NPSA ne vous demandera d'argent.",
+  freeServiceBody: "Vous n'avez jamais besoin de payer quelqu'un pour suivre une demande",
 
   verifyTitle: "Nous vérifions que c'est vous",
   verifyWhy:

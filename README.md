@@ -4,9 +4,9 @@ Interactive prototype for the UI/UX practical assessment. Three audiences from t
 brief, side by side behind the tabs at the top of the page.
 
 **Live:**
-[Citizen (phone)](https://npsa-tracker.netlify.app/#/citizen) ·
-[Officer (desktop)](https://npsa-tracker.netlify.app/#/officer) ·
-[No smartphone (USSD & SMS)](https://npsa-tracker.netlify.app/#/phone)
+[Citizen (phone)](https://aristote-code.github.io/npsa-tracker/#/citizen) ·
+[Officer (desktop)](https://aristote-code.github.io/npsa-tracker/#/officer) ·
+[No smartphone (USSD & SMS)](https://aristote-code.github.io/npsa-tracker/#/phone)
 
 ```bash
 npm install

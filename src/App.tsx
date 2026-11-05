@@ -7,10 +7,10 @@ import { FeaturePhone } from "@/screens/phone/FeaturePhone";
 
 type View = "citizen" | "officer" | "phone";
 
-const VIEWS: Array<{ id: View; label: string; note: string }> = [
-  { id: "citizen", label: "Citizen", note: "Smartphone" },
-  { id: "officer", label: "Officer", note: "Desktop" },
-  { id: "phone", label: "No smartphone", note: "USSD & SMS" },
+const VIEWS: Array<{ id: View; label: string }> = [
+  { id: "citizen", label: "Citizen" },
+  { id: "officer", label: "Officer" },
+  { id: "phone", label: "No smartphone" },
 ];
 
 const IDS = VIEWS.map((option) => option.id);
@@ -52,8 +52,7 @@ export function App() {
               aria-pressed={view === option.id}
               onClick={() => show(option.id)}
             >
-              <b>{option.label}</b>
-              <small>{option.note}</small>
+              {option.label}
             </button>
           ))}
         </nav>

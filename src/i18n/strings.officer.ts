@@ -20,9 +20,7 @@
 const en = {
   // ------------------------------------------------------------- queue --
   "o.title": "Applications",
-  "o.sub": "Find a file and give the citizen an answer.",
   "o.search": "Reference, phone number or name",
-  "o.searchHint": "Callers often do not have their reference.",
   "o.awaiting": "Awaiting action",
   "o.completed": "Completed this week",
   "o.col.citizen": "Citizen",
@@ -100,10 +98,9 @@ const en = {
 
   // ------------------------------------------------------- feature phone --
   "u.title": "No smartphone",
-  "u.sub": "Any phone can check a file, with no data and no app.",
   "u.dial": "Dial {code} — free on every network",
-  "u.pullTitle": "Pull: the citizen asks",
-  "u.pushTitle": "Push: NPSA tells them first",
+  "u.pullTitle": "The citizen asks",
+  "u.pushTitle": "NPSA tells them first",
   "u.send": "Reply",
   "u.cancel": "Cancel",
   "u.reset": "Start again",
@@ -115,7 +112,7 @@ const en = {
   "u.noteOs":
     "The dialog belongs to the handset, not to us. No colour, no logo, no layout — NPSA controls the text and nothing else, so the text is the whole design.",
   "u.noteKeypad":
-    "Jean Bosco's phone has a numeric keypad, so every step is a digit. No step ever asks him to type a word — which is also why the file number is entered as its last five digits.",
+    "Jean Bosco's phone has a numeric keypad, so every step is a digit. No step ever asks him to type a word — which is why the file number has no letters in it at all.",
   "u.noteLang":
     "Language is the first question, asked once. The network remembers the choice against his number, so he never answers it again. The real MTN menu is English only; this is the gap worth closing.",
   "u.noteTimeout":
@@ -146,9 +143,7 @@ export type OfficerDict = typeof en;
 
 const rw: OfficerDict = {
   "o.title": "Dosiye",
-  "o.sub": "Shakisha dosiye uhite uha umuturage igisubizo.",
   "o.search": "Nimero ya dosiye, nimero ya telefone cyangwa amazina",
-  "o.searchHint": "Abahamagara akenshi ntibaba bafite nimero ya dosiye.",
   "o.awaiting": "Zitegereje igikorwa",
   "o.completed": "Zarangiye iki cyumweru",
   "o.col.citizen": "Umuturage",
@@ -220,7 +215,6 @@ const rw: OfficerDict = {
   "h.stageChanged": "Byimuriwe kuri {stage}",
 
   "u.title": "Abadafite telefone igezweho",
-  "u.sub": "Telefone iyo ari yo yose irareba dosiye, nta data, nta porogaramu.",
   "u.dial": "Kanda {code} — ni ubuntu kuri buri murongo",
   "u.pullTitle": "Umuturage ni we ubaza",
   "u.pushTitle": "NPSA ni yo ibanza kumumenyesha",
@@ -235,7 +229,7 @@ const rw: OfficerDict = {
   "u.noteOs":
     "Iki kiganiro ni icya telefone, si icyacu. Nta mabara, nta kirango, nta miterere — NPSA igenga inyandiko gusa, ni yo mpamvu inyandiko ari yo gishushanyo cyose.",
   "u.noteKeypad":
-    "Telefone ya Jean Bosco ifite buto z'imibare gusa, bityo buri ntambwe ni umubare. Nta ntambwe imusaba kwandika ijambo — ni na yo mpamvu nimero ya dosiye yandikwa ku mibare 5 ya nyuma.",
+    "Telefone ya Jean Bosco ifite buto z'imibare gusa, bityo buri ntambwe ni umubare. Nta ntambwe imusaba kwandika ijambo — ni na yo mpamvu nimero ya dosiye idafite inyuguti na nkeya.",
   "u.noteLang":
     "Ururimi ni cyo kibazo cya mbere, kibazwa rimwe gusa. Umurongo wibuka icyo yahisemo kuri nimero ye, ntabwo azongera kukibazwa. Menu nyayo ya MTN iri mu Cyongereza gusa; ni ho hari icyuho cyo kuziba.",
   "u.noteTimeout":
@@ -267,9 +261,7 @@ const rw: OfficerDict = {
 
 const fr: OfficerDict = {
   "o.title": "Demandes",
-  "o.sub": "Trouvez un dossier et donnez une réponse claire au citoyen.",
   "o.search": "Numéro de dossier, téléphone ou nom",
-  "o.searchHint": "Les appelants n'ont souvent pas leur numéro de dossier.",
   "o.awaiting": "En attente d'action",
   "o.completed": "Terminées cette semaine",
   "o.col.citizen": "Citoyen",
@@ -341,7 +333,6 @@ const fr: OfficerDict = {
   "h.stageChanged": "Déplacée vers {stage}",
 
   "u.title": "Sans smartphone",
-  "u.sub": "N'importe quel téléphone peut consulter un dossier, sans data et sans application.",
   "u.dial": "Composez {code} — gratuit sur tous les réseaux",
   "u.pullTitle": "Le citoyen demande",
   "u.pushTitle": "La NPSA prévient d'elle-même",
@@ -356,7 +347,7 @@ const fr: OfficerDict = {
   "u.noteOs":
     "La boîte de dialogue appartient au téléphone, pas à nous. Pas de couleur, pas de logo, pas de mise en page — la NPSA ne contrôle que le texte, et c'est donc le texte qui est tout le design.",
   "u.noteKeypad":
-    "Le téléphone de Jean Bosco n'a qu'un clavier numérique : chaque étape est un chiffre. Aucune étape ne lui demande d'écrire un mot — d'où la saisie des cinq derniers chiffres du dossier.",
+    "Le téléphone de Jean Bosco n'a qu'un clavier numérique : chaque étape est un chiffre. Aucune étape ne lui demande d'écrire un mot — d'où un numéro de dossier sans la moindre lettre.",
   "u.noteLang":
     "La langue est la première question, posée une seule fois. Le réseau retient le choix pour son numéro. Le vrai menu MTN est en anglais uniquement : c'est précisément l'écart à combler.",
   "u.noteTimeout":

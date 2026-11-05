@@ -36,10 +36,7 @@ export function OfficerQueue({ role, onOpen }: OfficerQueueProps) {
   return (
     <div className="o-screen">
       <div className="o-head">
-        <div>
-          <h1>{t("o.title")}</h1>
-          <p>{t("o.sub")}</p>
-        </div>
+        <h1>{t("o.title")}</h1>
         <div className="o-counts">
           <span>
             <strong>{awaiting}</strong>
@@ -66,8 +63,6 @@ export function OfficerQueue({ role, onOpen }: OfficerQueueProps) {
             />
             <kbd>/</kbd>
           </div>
-          {/* Callers ring precisely because they have lost the reference. */}
-          <span className="o-search__hint">{t("o.searchHint")}</span>
         </div>
         <span className={`o-role o-role--${role}`}>
           {t(role === "processing" ? "o.role.processing" : "o.role.frontDesk")}

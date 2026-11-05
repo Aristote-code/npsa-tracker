@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert02Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import { Alert02Icon } from "@hugeicons/core-free-icons";
 
 import { Icon } from "@/components/Icon";
 import { Page } from "@/components/Page";
@@ -56,10 +56,7 @@ export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
   return (
     <Page>
       <form className="form" onSubmit={submit} noValidate>
-        <div className="page-head">
-          <h1>{t("lookupTitle")}</h1>
-          <p>{t("lookupSub")}</p>
-        </div>
+        <h1 className="lookup-title">{t("lookupTitle")}</h1>
 
         <div className="field">
           <label htmlFor="reference">{t("refLabel")}</label>
@@ -68,6 +65,8 @@ export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
             name="reference"
             className="input input--ref mono"
             value={value}
+            /* The example lives in the field it describes, not under it. */
+            placeholder={t("refHint")}
             /* Digits only, so an Android raises the number pad, not QWERTY. */
             inputMode="numeric"
             pattern="[0-9 ]*"
@@ -75,23 +74,19 @@ export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
             spellCheck={false}
             maxLength={REFERENCE_LENGTH + 2}
             aria-invalid={problem !== null}
-            aria-describedby={problem ? "reference-problem" : "reference-hint"}
+            aria-describedby={problem ? "reference-problem" : undefined}
             onChange={(event) => {
               setValue(formatReference(event.target.value.replace(/\D/g, "")));
               setProblem(null);
             }}
           />
-          {message ? (
+          {message && (
             <p className="field__error" id="reference-problem" role="alert">
               <Icon icon={Alert02Icon} size={15} strokeWidth={2} />
               <span>
                 {message.title && <b>{message.title} </b>}
                 {message.body}
               </span>
-            </p>
-          ) : (
-            <p className="field__hint" id="reference-hint">
-              {t("refHint")}
             </p>
           )}
         </div>
@@ -102,18 +97,15 @@ export function Lookup({ onFound, onNeedHelp, onShowReceipt }: LookupProps) {
           type="submit"
           disabled={digits.length < REFERENCE_LENGTH}
         >
-          <FancyButton.Icon as="span">
-            <Icon icon={Search01Icon} size={18} />
-          </FancyButton.Icon>
           {t("lookupAction")}
         </FancyButton.Root>
 
-        <button type="button" className="linkish" onClick={onNeedHelp}>
+        <button type="button" className="quiet-link" onClick={onNeedHelp}>
           {t("noReference")}
         </button>
 
-        {/* Prototype data, so a reviewer can get in without guessing. The last
-            chip is a valid-looking number with a bad check digit. */}
+        {/* Prototype data, so a reviewer can get in without guessing. The
+            fourth number is a transposition that fails the check digit. */}
         <div className="demo-refs">
           <span>Prototype numbers</span>
           {applications.map((application) => (
